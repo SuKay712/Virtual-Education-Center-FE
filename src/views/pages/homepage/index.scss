@@ -1,0 +1,203 @@
+@import "../../../constants/colors.scss";
+
+.home-container {
+  min-height: 663px;
+  background-color: #fffbe7;
+  .home-content {
+    .home-content-title {
+      color: $red-primary-color;
+      font-weight: 900;
+      font-size: 44px;
+      margin-bottom: 12px;
+    }
+    .home-content-quantity-item {
+      .home-content-quantity-number {
+        font-size: 28px;
+        font-weight: 900;
+        color: black;
+      }
+    }
+  }
+  .home-banner {
+    display: flex;
+    width: 40%;
+    justify-content: center;
+  }
+  .line-seperate {
+    width: 1px;
+    height: 28px;
+    margin: 0 30px;
+    background-color: rgb(209, 208, 208, 0.5);
+  }
+}
+.programs-container {
+  min-height: 1400px;
+  background-color: #ffffff;
+  .programs-title {
+    margin-top: 40px;
+    color: $red-primary-color;
+    font-weight: 900;
+    font-size: 44px;
+    margin-bottom: 12px;
+  }
+  .programs-description {
+    font-size: 20px;
+  }
+  .programs-banner {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .programs-card {
+    width: 25%;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    .programs-card-img {
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+    }
+    .programs-card-title {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 900;
+      color: $red-primary-color;
+    }
+  }
+  .programs-describe {
+    padding: 80px 0;
+    background-color: #fffbe7;
+    .programs-describe-content {
+      background-color: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 40px;
+      padding: 20px 40px;
+      .programs-describe-title {
+        font-size: 20px;
+        font-weight: 900;
+        color: $red-primary-color;
+      }
+      .programs-describe-divider {
+        border: none;
+        border-top: 1px solid #ccc; // Màu và kiểu đường kẻ
+        margin: 4px 0; // Khoảng cách trên và dưới
+      }
+    }
+    .programs-describe-img {
+      border-radius: 20px;
+    }
+  }
+  .orange-primary {
+    color: #fb5353;
+    font-weight: 800;
+  }
+}
+.teachers-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .teachers-title {
+    margin-top: 40px;
+    color: $red-primary-color;
+    font-weight: 900;
+    font-size: 44px;
+    margin-bottom: 12px;
+  }
+  .teachers-description {
+    font-size: 20px;
+    color: rgba(110, 109, 109, 0.9);
+  }
+  .teacher-card {
+    width: 15%;
+    max-height: fit-content;
+    margin: 0 70px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    .teacher-card-img {
+      height: 350px;
+      border-radius: 20px 20px 0 0;
+    }
+    .teacher-card-title {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 900;
+      color: $red-primary-color;
+    }
+    .teacher-card-description {
+      font-size: 16px;
+      color: rgba(110, 109, 109, 0.9);
+    }
+    .teacher-card-info {
+      min-width: 200px;
+      .teacher-card-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .teacher-card-divider {
+        border: none;
+        border-top: 1px solid #ccc; // Đường gạch ngang
+        margin: 8px 0;
+      }
+
+      .teacher-card-certificates {
+        font-size: 14px;
+        color: #555;
+
+        ul {
+          list-style-type: disc;
+          padding-left: 20px;
+          text-align: left; // Căn trái danh sách
+        }
+
+        li {
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+}
+.about-container {
+  min-height: 1000px;
+  .about-ceo-content {
+    background-color: #fffbe7;
+    padding: 0 80px;
+    height: 658px;
+    p {
+      margin-bottom: 10px;
+    }
+  }
+  .about-student-image {
+    width: 100%;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    &.student-1 {
+      background-image: url("../../../assets/images/img_2.png");
+    }
+    &.student-2 {
+      background-image: url("../../../assets/images/img_3.png");
+    }
+  }
+  .about-student-content {
+    background-color: #f9deda;
+    padding: 0 80px;
+    h4 {
+      color: $red-primary-color;
+      font-weight: 900;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+    .student-divider {
+      border: none;
+      border-top: 2px solid $red-primary-color; // Màu và kiểu đường kẻ
+      width: 50%; // Độ dài đường kẻ (tùy chỉnh)
+      margin-top: 0px;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../constants/colors.scss";
+.auth-btn {
+  margin-right: 30px;
+  background-color: #ffffff;
+  padding: 8px 12px;
+  color: $red-primary-color;
+  border-radius: 10px;
+  font-weight: 600;
+  &:hover {
+    background-color: $yellow-primary-color;
+    color: $red-primary-color;
+    opacity: 0.9;
+  }
+}
+
+.register-btn {
+  background-color: $red-primary-color;
+  padding: 8px 18px;
+  color: $yellow-primary-color;
+  border-radius: 10px;
+  &:hover {
+    background-color: $yellow-primary-color;
+    color: $red-primary-color;
+    opacity: 0.9;
+  }
+}

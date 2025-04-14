@@ -18,6 +18,7 @@ import { useAuth } from "../../contexts/AccountContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ICONS } from "../../constants/icons";
+import AuthButton from "../buttons/AuthButton";
 
 const Header = ({ userInfo }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,7 +49,34 @@ const Header = ({ userInfo }) => {
   useEffect(() => {
     getProfile();
   }, [localStorage.getItem("access_token")]);
-  return <div className="container-header position-sticky sticky-top"></div>;
+  return (
+    <div className="header-container position-sticky sticky-top">
+      <div className="d-flex justify-content-between align-items-center h-100">
+        <span className="header-title">Virtual Center</span>
+        <div className="d-flex align-items-center">
+          <Dropdown className="header-language-dropdown">
+            <Dropdown.Toggle
+              variant="secondary"
+              id="language-dropdown"
+              className="header-language-dropdown-toggle d-flex align-items-center"
+              style={{ width: "100%" }}
+            >
+              <IoMdPerson className="me-2" /> Language
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{ minWidth: "100%" }}>
+              <Dropdown.Item onClick={() => console.log("English selected")}>
+                English
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => console.log("Vietnamese selected")}>
+                Vietnamese
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <AuthButton />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Header;

@@ -1,0 +1,25 @@
+.navbar {
+  width: 100%;
+  padding: 16px 8%;
+  top: 90px;
+  background-color: #ffffff;
+  .navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      color: #555252;
+      display: flex;
+      cursor: pointer;
+      font-size: 22px;
+      align-items: center;
+      .line-seperate {
+        width: 1px;
+        height: 24px;
+        margin: 0 30px;
+        background-color: rgb(209, 208, 208, 0.5);
+      }
+    }
+  }
+}

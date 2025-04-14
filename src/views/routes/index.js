@@ -7,6 +7,7 @@ import MainLayout from "../../components/layouts/MainLayout";
 import LoadableComponent from "../../components/loadable-components/loadable-component";
 import { useAuth } from "../../contexts/AccountContext";
 import ProtectedRoute from "./protected-route";
+import Homepage from "../pages/homepage";
 
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
@@ -33,14 +34,14 @@ const AllRoutes = () => {
             to={
               account && (account.role === "admin" || account.role === "staff")
                 ? "/admin/dashboard"
-                : "/homepage"
+                : "/home"
             }
           />
         }
       />
       {/* // public route  */}
       <Route element={<PublicRoute />}>
-        <Route path="/homepage" element={<MainLayout />} />
+        <Route path="/home" element={<MainLayout component={Homepage} />} />
       </Route>
       {/* // admin, staff route  */}
       {/* <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
