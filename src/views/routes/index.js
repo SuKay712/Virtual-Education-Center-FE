@@ -8,6 +8,8 @@ import LoadableComponent from "../../components/loadable-components/loadable-com
 import { useAuth } from "../../contexts/AccountContext";
 import ProtectedRoute from "./protected-route";
 import Homepage from "../pages/homepage";
+import StudentLayout from "../../components/layouts/StudentLayout";
+import Overview from "../pages/student/Overview";
 
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
@@ -44,16 +46,12 @@ const AllRoutes = () => {
         <Route path="/home" element={<MainLayout component={Homepage} />} />
       </Route>
       {/* // admin, staff route  */}
-      {/* <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
         <Route
-          path="/admin/dashboard"
-          element={<AdminLayout component={<AdminDashboard />} />}
+          path="/student"
+          element={<StudentLayout component={Overview} />}
         />
-        <Route
-          path="/admin/products/details/:id"
-          element={<AdminLayout component={<AdminItemDetail />} />}
-        />
-      </Route> */}
+      </Route>
     </Routes>
   );
 };

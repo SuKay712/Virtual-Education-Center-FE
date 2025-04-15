@@ -7,4 +7,7 @@ export const IMAGES = {
   ceo_image: require("../assets/images/ceo-image.png"),
   student1_image: require("../assets/images/img_2.png"),
   student2_image: require("../assets/images/img_3.png"),
+  student_dashboard_header: require("../assets/images/student-dashboard-header.png"),
+  group_image: require("../assets/images/Group.png"),
+  france_image: require("../assets/images/France.png"),
 };

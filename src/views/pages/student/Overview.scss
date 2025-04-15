@@ -1,0 +1,17 @@
+@import "../../../constants/colors.scss";
+
+.overview-container {
+  width: 60%;
+  padding-right: 50px;
+  .overview-header {
+    h2 {
+      font-weight: 900;
+    }
+    a {
+      text-decoration: none;
+      color: #d36a00;
+      cursor: pointer;
+    }
+  }
+  border-right: 1px solid #d1d0d0;
+}

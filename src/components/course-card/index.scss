@@ -1,0 +1,70 @@
+.course-card {
+  background-color: #fff;
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  &.color-4caf50 {
+    background-color: #4caf50;
+  }
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  .course-card-body {
+    padding: 16px;
+    padding-bottom: 0;
+    .course-card-info {
+      h3 {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+      p {
+        font-size: 10px;
+        color: #fff;
+        margin: 0;
+      }
+    }
+    .course-card-progress {
+      margin: 16px 0;
+      margin-bottom: 0;
+      .progress-circle {
+        width: 40px; // Kích thước vòng tròn
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .progress-inner-circle {
+          width: 32px; // Kích thước vòng tròn bên trong
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          font-weight: bold;
+          color: #fff; // Màu chữ
+          &.color-4caf50 {
+            background-color: #4caf50;
+          }
+        }
+      }
+    }
+    .course-card-image {
+      img {
+        padding: 10px;
+        padding-top: 0;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
