@@ -1,0 +1,34 @@
+.plan-card {
+  display: flex;
+  flex: 1;
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 10px;
+  .plan-card-image-holder {
+    width: 20%;
+    padding: 10px;
+    border-radius: 10px;
+    .plan-card-image {
+      &.book-icon {
+        width: 100%;
+        height: 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../../assets/images/book1.png);
+      }
+    }
+    &.book-icon {
+      background-color: rgba(194, 225, 253, 0.5);
+    }
+  }
+  .plan-card-content {
+    margin-left: 10px;
+    h5 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+}

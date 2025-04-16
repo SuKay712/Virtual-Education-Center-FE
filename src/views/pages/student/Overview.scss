@@ -4,6 +4,8 @@
   width: 60%;
   padding-right: 50px;
   .overview-header {
+    width: 100%;
+    display: block;
     h2 {
       font-weight: 900;
     }
@@ -11,6 +13,25 @@
       text-decoration: none;
       color: #d36a00;
       cursor: pointer;
+    }
+    .react-datepicker-wrapper-wrap {
+      display: flex;
+      align-items: center;
+      background-color: #f7f7f7;
+      justify-content: center;
+      padding: 10px;
+      border-radius: 10px;
+      margin-left: auto;
+      .react-datepicker-wrapper {
+        margin-right: 8px;
+        .react-datepicker__input-container {
+          input {
+            background-color: #f7f7f7;
+            width: 90px;
+            border: none;
+          }
+        }
+      }
     }
   }
   border-right: 1px solid #d1d0d0;
