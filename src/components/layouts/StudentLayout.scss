@@ -12,9 +12,13 @@ body {
 .student-frame-wrapper {
   width: 100%;
   display: flex;
+  flex: 1;
   .frame-body {
+    display: flex;
+    flex-direction: column;
     padding: 0 50px 0;
     width: 100%;
+    flex: 1;
     background-color: #fefdea;
     .frame-header {
       display: flex;
