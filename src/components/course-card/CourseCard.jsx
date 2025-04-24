@@ -2,14 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { IMAGES } from "../../constants/images";
 import "./index.scss";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, onClick }) => {
   const navigate = useNavigate();
   return (
     <div
       className={`course-card color-${course.course.color}`}
-      onClick={() => {
-        navigate("/student");
-      }}
+      onClick={onClick}
     >
       <div className="course-card-body d-flex justify-content-between align-items-center">
         <div className="course-card-info d-flex flex-column">

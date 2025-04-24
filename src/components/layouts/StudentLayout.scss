@@ -12,7 +12,6 @@ body {
 .student-frame-wrapper {
   width: 100%;
   display: flex;
-  flex: 1;
   .frame-body {
     display: flex;
     flex-direction: column;
@@ -28,6 +27,63 @@ body {
         font-size: 20px;
         font-weight: 900;
         color: $red-primary-color;
+      }
+      .user-info {
+        cursor: pointer;
+        padding: 10px;
+        background-color: #f8c68d;
+        border-radius: 10px;
+        min-width: 200px;
+        z-index: 1;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 20%;
+        }
+        position: relative;
+
+        .dropdown-icon {
+          font-size: 14px;
+          cursor: pointer;
+          transition: transform 0.3s;
+
+          &.open {
+            transform: rotate(180deg); // Xoay mũi tên khi mở menu
+          }
+        }
+
+        .dropdown-menu {
+          position: absolute;
+          top: 105%; // Hiển thị ngay bên dưới phần tử cha
+          right: 0;
+          width: 40%;
+          background-color: #f8c68d;
+          border-radius: 4px;
+          border: none;
+          padding: 0 !important;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          z-index: 10;
+          display: flex; // Đảm bảo menu hiển thị
+          flex-direction: column;
+
+          .btn-logout {
+            color: #474747;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #f7ab53;
+            }
+          }
+        }
+      }
+      .notification-icon {
+        margin-right: 230px;
+        font-size: 24px;
       }
     }
   }

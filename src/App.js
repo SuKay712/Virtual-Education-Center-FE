@@ -4,6 +4,7 @@ import AllRoutes from "./views/routes/index";
 import { AuthProvider } from "./contexts/AccountContext";
 import AuthWrapper from "./AuthWrapper";
 import { BubbleChat } from "flowise-embed-react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   return (

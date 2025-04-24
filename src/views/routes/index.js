@@ -10,6 +10,7 @@ import ProtectedRoute from "./protected-route";
 import Homepage from "../pages/homepage";
 import StudentLayout from "../../components/layouts/StudentLayout";
 import Overview from "../pages/student/Overview";
+import Course from "../pages/student/Course";
 
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
@@ -48,8 +49,12 @@ const AllRoutes = () => {
       {/* // admin, staff route  */}
       <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
         <Route
-          path="/student"
+          path="/student/overview"
           element={<StudentLayout component={Overview} />}
+        />
+        <Route
+          path="/student/course"
+          element={<StudentLayout component={Course} />}
         />
       </Route>
     </Routes>
