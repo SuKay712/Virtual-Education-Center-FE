@@ -1,0 +1,108 @@
+@import "../../constants/colors.scss";
+
+.class-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transform: translateX(100%);
+  animation: slide-in 0.3s forwards;
+  border-radius: 20px;
+  .modal-content {
+    border-radius: 20px;
+    max-height: 100%;
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+    .modal-header {
+      background-color: rgb(240, 136, 0);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      h3 {
+        font-size: 24px;
+        font-weight: 800;
+        color: rgb(251, 245, 245);
+        margin-bottom: 0;
+      }
+    }
+    .modal-class-info {
+      padding: 20px;
+      background-color: rgb(252, 155, 28);
+      color: white;
+      font-size: 16px;
+    }
+    .modal-class-detail {
+      background-color: rgb(255, 226, 172);
+      padding: 20px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+      -ms-overflow-style: none; /* Ẩn thanh cuộn trên Internet Explorer */
+
+      /* Ẩn thanh cuộn trên Webkit (Chrome, Edge, Safari) */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .modal-class-label {
+        font-weight: 600;
+        color: gray;
+      }
+      img {
+        width: 80px; /* Chiều rộng ảnh */
+        height: 100px; /* Chiều cao ảnh */
+        object-fit: cover; /* Đảm bảo ảnh không bị méo */
+        border-radius: 8px;
+      }
+      .class-bookings {
+        margin-top: 16px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 12px 0;
+      }
+    }
+  }
+  .class-mobal-submit-btn {
+    background-color: $red-primary-color;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+  }
+}
+
+.status-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bg-success {
+  background-color: #28a745; /* Màu xanh cho trạng thái hoàn thành */
+}
+
+.bg-warning {
+  background-color: #ffc107; /* Màu vàng cho trạng thái chưa hoàn thành */
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

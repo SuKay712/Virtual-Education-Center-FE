@@ -1,0 +1,59 @@
+@import "../../../constants/colors.scss";
+.fc-event {
+  color: #fff; /* Màu chữ */
+  background-color: #4caf50; /* Màu nền */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  border: none; /* Loại bỏ viền */
+  border-radius: 4px; /* Bo góc */
+  padding: 2px 4px; /* Khoảng cách bên trong */
+  font-weight: bold; /* Chữ đậm */
+}
+
+.fc-event:hover {
+  background-color: #388e3c; /* Màu nền khi hover */
+  cursor: pointer; /* Con trỏ chuột */
+}
+.fc-col-header-cell {
+  color: #333; /* Màu chữ */
+  font-weight: bold; /* Chữ đậm */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  font-size: 14px; /* Kích thước chữ */
+  height: 36px;
+  line-height: 36px;
+  font-size: 18px;
+}
+
+.fc-col-header-cell a {
+  color: inherit; /* Kế thừa màu từ cha */
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+.fc-col-header-cell a:hover {
+  color: #000; /* Màu chữ khi hover */
+}
+.fc-daygrid-day-top {
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}
+.fc-button-group {
+  .fc-button-primary {
+    background-color: $red-primary-color;
+    margin-right: 10px;
+    border-radius: 10px;
+    .fc-icon {
+      color: $yellow-primary-color;
+    }
+    color: $yellow-primary-color;
+    border: none;
+    &.fc-button-active,
+    &:hover {
+      background-color: darken(
+        $color: $red-primary-color,
+        $amount: 10%
+      ) !important;
+      color: $yellow-primary-color !important;
+    }
+  }
+}

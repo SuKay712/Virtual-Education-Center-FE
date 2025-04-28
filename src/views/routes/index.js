@@ -11,7 +11,7 @@ import Homepage from "../pages/homepage";
 import StudentLayout from "../../components/layouts/StudentLayout";
 import Overview from "../pages/student/Overview";
 import Course from "../pages/student/Course";
-
+import Schedule from "../pages/student/Schedule";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AllRoutes = () => {
@@ -55,6 +55,10 @@ const AllRoutes = () => {
         <Route
           path="/student/course"
           element={<StudentLayout component={Course} />}
+        />
+        <Route
+          path="/student/schedule"
+          element={<StudentLayout component={Schedule} />}
         />
       </Route>
     </Routes>
