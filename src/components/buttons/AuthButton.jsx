@@ -9,7 +9,7 @@ const AuthButton = () => {
   return (
     <button
       className="auth-btn d-flex align-items-center"
-      onClick={() => navigate("/auth/login")}
+      onClick={() => navigate("/login")}
     >
       <div className="d-flex align-items-center">
         <IoMdPerson size={20} />

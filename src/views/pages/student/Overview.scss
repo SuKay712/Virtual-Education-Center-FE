@@ -46,4 +46,128 @@
     }
     border-right: 1px solid #d1d0d0;
   }
+  .card-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    .card-modal-content {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      width: 450px;
+      max-height: 80%;
+      overflow-y: auto;
+      &.color-4caf50 {
+        background-color: #4caf50;
+      }
+      &.classes {
+        width: 600px;
+      }
+      .card-modal-header {
+        color: #fff;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .card-num-classes {
+        color: #fff;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .card-price {
+        color: #fff;
+        font-size: 20px;
+      }
+      .card-description {
+        white-space: pre-line;
+        font-size: 14px;
+      }
+
+      .card-view-detail-btn {
+        background-color: darken(
+          #4caf50,
+          10%
+        ); // Thay #4caf50 bằng giá trị động nếu cần
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: -10px;
+        margin-top: 20px;
+        &:hover {
+          background-color: darken(#4caf50, 15%); // Đậm hơn khi hover
+        }
+        &.color-4caf50 {
+          .card-view-detail-btn {
+            background-color: darken(#4caf50, 10%);
+          }
+        }
+      }
+
+      .card-close-btn {
+        position: absolute;
+        width: 20px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #333;
+
+        &:hover {
+          color: #000;
+        }
+
+        i {
+          font-size: 20px; // Kích thước icon
+        }
+      }
+      .lecture-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        .lecture-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          background-color: #f9f9f9;
+
+          .lecture-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-right: 15px;
+          }
+
+          .lecture-info {
+            flex: 1;
+
+            .lecture-name {
+              font-size: 16px;
+              font-weight: bold;
+              margin: 0 0 5px;
+            }
+
+            .lecture-description {
+              font-size: 14px;
+              color: #555;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }

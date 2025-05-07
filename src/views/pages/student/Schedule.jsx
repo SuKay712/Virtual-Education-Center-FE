@@ -7,11 +7,30 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import ClassModal from "../../../components/modal/ClassModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import studentAPI from "../../../api/studentAPI";
 
 function Schedule({ props }) {
   const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái mở modal
   const [selectedEvent, setSelectedEvent] = useState(null); // Trạng thái lưu sự kiện được chọn
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchClasses = async () => {
+    try {
+      setLoading(true);
+      const response = await studentAPI.getClasses();
+      setClasses(response.data);
+    } catch (error) {
+      console.error("Error fetching classes:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchClasses();
+  }, []);
 
   const handleEventClick = (info) => {
     setSelectedEvent(info.event.extendedProps); // Lưu thông tin sự kiện được chọn
@@ -23,72 +42,12 @@ function Schedule({ props }) {
     setSelectedEvent(null); // Xóa thông tin sự kiện được chọn
   };
 
-  const plans = [
-    {
-      id: 3,
-      lecture: {
-        id: 2,
-        name: 1,
-        student: {
-          id: 1,
-          name: "Khoi",
-        },
-      },
-      name: "Reading - Beginner Topic 1",
-      bookings: [
-        {
-          id: 1,
-          teacher: {
-            id: 1,
-            name: "Kay",
-          },
-        },
-      ],
-      icon: "book-icon",
-      time_start: "10:20 17/04/2025",
-      time_end: "11:20 17/04/2025",
-      rating: 5,
-      comment: "",
-      meeting_id: 1,
-      created_at: "07:20 18/04/2025",
-      updated_at: "07:20 18/04/2025",
-    },
-    {
-      id: 4,
-      lecture: {
-        id: 2,
-        name: 1,
-        student: {
-          id: 1,
-          name: "Khoi",
-        },
-      },
-      name: "Reading - Beginner Topic 1",
-      bookings: [
-        {
-          id: 1,
-          teacher: {
-            id: 1,
-            name: "Kay",
-          },
-        },
-      ],
-      icon: "book-icon",
-      time_start: "10:20 19/04/2025",
-      time_end: "11:20 19/04/2025",
-      rating: 5,
-      comment: "",
-      meeting_id: 1,
-      created_at: "07:20 18/04/2025",
-      updated_at: "07:20 18/04/2025",
-    },
-  ];
   // Các sự kiện mẫu
-  const events = plans.map((plan) => ({
+  const events = classes.map((plan) => ({
     id: plan.id,
-    title: plan.name,
-    start: moment(plan.time_start, "HH:mm DD/MM/YYYY").toDate(), // Chuyển đổi sang đối tượng Date
-    end: moment(plan.time_end, "HH:mm DD/MM/YYYY").toDate(),
+    title: plan.lecture.name,
+    start: plan.time_start,
+    end: plan.time_end,
     extendedProps: plan,
   }));
 

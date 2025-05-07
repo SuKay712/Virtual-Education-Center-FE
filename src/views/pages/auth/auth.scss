@@ -1,0 +1,72 @@
+@import "../../../constants/colors.scss";
+
+.auth-container {
+  min-height: 100vh;
+  align-items: center;
+  padding: 2rem 0;
+  background-color: $yellow-primary-color;
+}
+
+.auth-card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.auth-card .card-body {
+  padding: 2rem;
+}
+
+.auth-card h2 {
+  color: $red-primary-color;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+}
+
+.auth-card .form-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.auth-card .form-control {
+  border-radius: 5px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+
+.auth-card .form-control:focus {
+  border-color: $red-primary-color;
+  box-shadow: 0 0 0 0.2rem rgba(147, 47, 47, 0.25);
+}
+
+.auth-card .btn-primary {
+  padding: 0.75rem;
+  font-weight: 600;
+  border-radius: 5px;
+  background-color: $red-primary-color;
+  border: none;
+  color: $yellow-primary-color;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($red-primary-color, 10%);
+    color: $yellow-primary-color;
+  }
+}
+
+.auth-card .alert {
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.auth-card a {
+  text-decoration: none;
+  font-weight: 500;
+  color: $red-primary-color;
+
+  &:hover {
+    color: darken($red-primary-color, 10%);
+    text-decoration: underline;
+  }
+}

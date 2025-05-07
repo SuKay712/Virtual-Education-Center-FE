@@ -5,31 +5,26 @@ import "./index.scss";
 const CourseCard = ({ course, onClick }) => {
   const navigate = useNavigate();
   return (
-    <div
-      className={`course-card color-${course.course.color}`}
-      onClick={onClick}
-    >
+    <div className={`course-card color-4caf50`} onClick={onClick}>
       <div className="course-card-body d-flex justify-content-between align-items-center">
         <div className="course-card-info d-flex flex-column">
-          <h3>{course.course.name}</h3>
+          <h3>{course.name}</h3>
           <p>{course.lessons} Lessons</p>
           <div className="course-card-progress">
             <div
               className="progress-circle"
               style={{
-                background: `conic-gradient(#${course.course.color} ${100 - course.progress}%, #ffffff ${100 - course.progress}% 100%)`,
+                background: `conic-gradient(#4caf50 ${100 - course.progress}%, #ffffff ${100 - course.progress}% 100%)`,
               }}
             >
-              <div
-                className={`progress-inner-circle color-${course.course.color}`}
-              >
+              <div className={`progress-inner-circle color-4caf50`}>
                 <span>{course.progress}%</span>
               </div>
             </div>
           </div>
         </div>
         <div className="course-card-image">
-          <img src={course.course.image} alt={course.course.name} />
+          <img src={IMAGES.france_image} alt={course.name} />
         </div>
       </div>
     </div>

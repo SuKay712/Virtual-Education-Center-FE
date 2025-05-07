@@ -7,6 +7,8 @@ import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
 const ClassModal = ({ info, handleCloseModal }) => {
+  const userInfo = JSON.parse(localStorage.getItem("user_info"));
+
   const [studentAttitude, setStudentAttitude] = useState(
     info.student_attitude || ""
   );
@@ -26,13 +28,16 @@ const ClassModal = ({ info, handleCloseModal }) => {
           &times;
         </button>
         <div className="modal-header">
-          <h3>{info.name}</h3>
+          <h3>{info.lecture.name}</h3>
         </div>
         <div className="modal-class-info">
           <div>
             <FaClock className="me-2" />
-            {moment(info.time_start, "HH:mm DD/MM/YYYY").format("HH:mm")} -{" "}
-            {moment(info.time_end, "HH:mm DD/MM/YYYY").format(
+            {moment(new Date(info.time_start), "HH:mm DD/MM/YYYY").format(
+              "HH:mm"
+            )}{" "}
+            -{" "}
+            {moment(new Date(info.time_end), "HH:mm DD/MM/YYYY").format(
               "HH:mm DD/MM/YYYY"
             )}
           </div>
@@ -46,11 +51,15 @@ const ClassModal = ({ info, handleCloseModal }) => {
             <div className="flex-grow-1 me-3">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <strong className="modal-class-label">Student name:</strong>
-                <span className="fw-bold">{info.lecture.student.name}</span>
+                <span className="fw-bold">{userInfo.name}</span>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <strong className="modal-class-label">Teacher name:</strong>
-                <span className="fw-bold">{info.bookings[0].teacher.name}</span>
+                <span className="fw-bold">
+                  {info.bookings && info.bookings.length > 0
+                    ? info.bookings[0].teacher.name
+                    : ""}
+                </span>
               </div>
             </div>
             <div>

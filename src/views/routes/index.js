@@ -13,6 +13,8 @@ import Overview from "../pages/student/Overview";
 import Course from "../pages/student/Course";
 import Schedule from "../pages/student/Schedule";
 import Profile from "../pages/student/Profile";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AllRoutes = () => {
@@ -46,6 +48,8 @@ const AllRoutes = () => {
       {/* // public route  */}
       <Route element={<PublicRoute />}>
         <Route path="/home" element={<MainLayout component={Homepage} />} />
+        <Route path="/login" element={<MainLayout component={Login} />} />
+        <Route path="/register" element={<MainLayout component={Register} />} />
       </Route>
       {/* // admin, staff route  */}
       <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
