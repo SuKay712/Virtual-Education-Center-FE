@@ -4,6 +4,7 @@ import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AccountContext";
 import authAPI from "../../../api/auth";
 import "./auth.scss";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,11 +31,12 @@ const Login = () => {
         name: res.data.name,
         address: res.data.address,
         avatar: res.data.avatar,
-        phone: res.data.tel,
+        phone: res.data.phone,
         gender: res.data.gender,
         email: res.data.email,
         role: res.data.role,
         birthday: res.data.birthday,
+        address: res.data.address,
       };
 
       if (accessToken) {
@@ -43,17 +44,19 @@ const Login = () => {
         localStorage.setItem("user_info", JSON.stringify(userInfo));
         setToken(accessToken);
         setAccount(userInfo);
-        setTimeout(() => {
-          if (userInfo.role === "Student") {
-            navigate("/student/overview");
-          } else {
-            navigate("/admin/dashboard");
-          }
-        }, 2000);
-        navigate("/");
+        toast.success("Login successfully", {
+          autoClose: 1500,
+          onClose: () => {
+            if (userInfo.role === "Student") {
+              navigate("/student/overview");
+            } else {
+              navigate("/admin/dashboard");
+            }
+          },
+        });
       }
     } catch (err) {
-      setError("Invalid email or password");
+      toast.error("Invalid email or password");
     }
   };
 
@@ -64,7 +67,6 @@ const Login = () => {
           <Card className="auth-card">
             <Card.Body>
               <h2 className="text-center mb-4">Login</h2>
-              {error && <div className="alert alert-danger">{error}</div>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>

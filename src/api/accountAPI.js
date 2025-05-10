@@ -1,29 +1,12 @@
-import axiosClient from '../utils/axiosCustomize';
+import axiosClient from "../utils/axiosCustomize";
 
 const accountAPI = {
-  adminListAccount: (page, limit, role) => {
-    const url = '/admin/accounts';
-    const params = {
-      page: page,
-      limit: limit,
-      role: role,
-    };
-    return axiosClient.application.get(url, { params });
-  },
-  adminUpdateAccount: (accountId, account) => {
-    const url = '/admin/accounts';
-    return axiosClient.application.put(url, { accountId: accountId, ...account });
-  },
-  userUpdateAccount: (formData) => {
-    const url = '/accounts/update';
+  updateAvatar: (formData) => {
+    const url = "/account/upload-avatar";
     return axiosClient.formData.put(url, formData);
   },
-  adminCreateStaffAccount: (formData) => {
-    const url = '/admin/accounts';
-    return axiosClient.formDataAuth.post(url, formData);
-  },
   changePassword: (formData) => {
-    const url = '/accounts/changePassword';
+    const url = "/account/update-password";
     return axiosClient.application.put(url, formData);
   },
 };

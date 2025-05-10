@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import { IMAGES } from "../../../constants/images";
 import { BsGenderMale, BsGenderFemale } from "react-icons/bs";
+import { toast } from "react-toastify";
+import accountAPI from "../../../api/accountAPI";
 
 import "./Profile.scss";
 
 function Profile() {
-  const initialAccount = {
-    name: "Nguyễn Văn A",
-    email: "a@gmail.com",
-    phone: "0123456789",
-    gender: "Male",
-    birthday: "01/01/2000",
-    address: "Hà Nội",
-    avatar: IMAGES.student1_image,
-    role: "Student",
-  };
+  const userInfo = JSON.parse(localStorage.getItem("user_info")) || {};
 
   const formatDate = (date) => {
-    const [day, month, year] = date.split("/");
-    return `${year}-${month}-${day}`; // Chuyển sang định dạng YYYY-MM-DD
+    if (!date) return "";
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
-  const [account, setAccount] = useState({
-    ...initialAccount,
-    birthday: formatDate(initialAccount.birthday),
+  const [formData, setFormData] = useState({
+    ...userInfo,
+    birthday: formatDate(userInfo.birthday),
   });
 
-  const [formData, setFormData] = useState({
-    ...account,
-    birthday: formatDate(account.birthday),
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -36,33 +34,85 @@ function Profile() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setFormData({ ...formData, avatar: reader.result });
-      };
-      reader.readAsDataURL(file);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await accountAPI.updateAvatar(formData);
+        console.log("API Response:", response);
+
+        setFormData((prev) => ({ ...prev, avatar: response.data.avatar }));
+        toast.success("Avatar updated successfully!");
+
+        const userInfo = JSON.parse(localStorage.getItem("user_info")) || {};
+        userInfo.avatar = response.data.avatar;
+        localStorage.setItem("user_info", JSON.stringify(userInfo));
+      } catch (error) {
+        console.error("Error updating avatar:", error);
+        toast.error("Failed to update avatar. Please try again.");
+      }
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAccount({ ...formData }); // Cập nhật lại thông tin của account
     console.log("Updated Account Info:", formData);
-    alert("Account information updated successfully!");
-    // Thực hiện logic gửi API tại đây nếu cần
+    toast.success("Account information updated successfully!");
   };
 
   const handleCancel = () => {
-    setFormData({ ...account }); // Reset về thông tin ban đầu
+    setFormData({ ...userInfo });
   };
 
   const calculateAge = (birthday) => {
-    const birthYear = new Date(birthday).getFullYear();
-    const currentYear = new Date().getFullYear();
-    return currentYear - birthYear;
+    const birthDate = new Date(birthday);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    // Kiểm tra nếu tháng hoặc ngày sinh chưa đến trong năm hiện tại
+    if (
+      today.getMonth() < birthDate.getMonth() || // Tháng hiện tại nhỏ hơn tháng sinh
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() < birthDate.getDate()) // Cùng tháng nhưng ngày hiện tại nhỏ hơn ngày sinh
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handlePasswordChange = async (e) => {
+    const { name, value } = e.target;
+    setPasswordData({ ...passwordData, [name]: value });
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.warning("New passwords do not match!");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast.warning("New password must be at least 6 characters long!");
+      return;
+    }
+    try {
+      const res = await accountAPI.changePassword(passwordData);
+      toast.success("Password updated successfully!");
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      toast.error("Failed to update password. Please try again.");
+    }
   };
 
   return (
@@ -195,6 +245,70 @@ function Profile() {
             </div>
           </div>
         </form>
+      </div>
+
+      <div className="profile-container d-flex justify-content-center m-5">
+        <div className="w-100" style={{ maxWidth: "500px" }}>
+          <div className="profile-header d-flex gap-3 align-items-center justify-content-center">
+            <h2>Change Password</h2>
+          </div>
+          <form onSubmit={handlePasswordSubmit} className="profile-form">
+            <div className="form-group mb-3">
+              <label htmlFor="currentPassword">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                className="form-control"
+                value={passwordData.currentPassword}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="newPassword">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                className="form-control"
+                value={passwordData.newPassword}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="confirmPassword">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                className="form-control"
+                value={passwordData.confirmPassword}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            <div className="form-actions d-flex gap-3 justify-content-center">
+              <button type="submit" className="form-submit-btn btn btn-primary">
+                Update Password
+              </button>
+              <button
+                type="button"
+                className="form-cancel-btn btn btn-secondary"
+                onClick={() =>
+                  setPasswordData({
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: "",
+                  })
+                }
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
       <div className="course-container right"></div>
     </div>

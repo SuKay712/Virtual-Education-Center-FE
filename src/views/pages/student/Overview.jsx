@@ -127,7 +127,9 @@ const Overview = () => {
       <div className="overview-container">
         <div className="overview-header d-flex gap-3 align-items-center">
           <h2>My course</h2>
-          <a href="">View all</a>
+          <a href="" onClick={() => navigate("/student/course")}>
+            View all
+          </a>
         </div>
         {loading ? (
           <p>Loading courses...</p>
