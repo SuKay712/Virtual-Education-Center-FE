@@ -9,50 +9,38 @@ import { useAuth } from "../../contexts/AccountContext";
 import ProtectedRoute from "./protected-route";
 import Homepage from "../pages/homepage";
 import StudentLayout from "../../components/layouts/StudentLayout";
+import TeacherLayout from "../../components/layouts/TeacherLayout";
 import Overview from "../pages/student/Overview";
 import Course from "../pages/student/Course";
 import Schedule from "../pages/student/Schedule";
 import Profile from "../pages/student/Profile";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import TeacherOverview from "../pages/teacher/Overview";
+import TeacherProfile from "../pages/teacher/Profile";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
-const AllRoutes = () => {
+const AppRoutes = () => {
+  const { account } = useAuth();
+
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Nunito Sans", "Public Sans"], // Danh sách font bạn muốn sử dụng
+        families: ["Roboto:300,400,500,700,900"],
       },
     });
   }, []);
 
-  const { account } = useAuth();
-
-  // console.log(account)
-  // console.log((account && (account.role === "admin" || account.role === "staff")) ? "/admin/dashboard" : "/homepage")
-
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <Navigate
-            to={
-              account && (account.role === "admin" || account.role === "staff")
-                ? "/admin/dashboard"
-                : "/home"
-            }
-          />
-        }
-      />
       {/* // public route  */}
       <Route element={<PublicRoute />}>
         <Route path="/home" element={<MainLayout component={Homepage} />} />
         <Route path="/login" element={<MainLayout component={Login} />} />
         <Route path="/register" element={<MainLayout component={Register} />} />
       </Route>
-      {/* // admin, staff route  */}
-      <Route element={<ProtectedRoute allowedRoles={["admin", "staff"]} />}>
+
+      <Route element={<ProtectedRoute allowedRoles={["Student"]} />}>
         <Route
           path="/student/overview"
           element={<StudentLayout component={Overview} />}
@@ -70,8 +58,19 @@ const AllRoutes = () => {
           element={<StudentLayout component={Profile} />}
         />
       </Route>
+
+      <Route element={<ProtectedRoute allowedRoles={["Teacher"]} />}>
+        <Route
+          path="/teacher/overview"
+          element={<TeacherLayout component={TeacherOverview} />}
+        />
+        <Route
+          path="/teacher/setting"
+          element={<TeacherLayout component={TeacherProfile} />}
+        />
+      </Route>
     </Routes>
   );
 };
 
-export default AllRoutes;
+export default AppRoutes;

@@ -50,7 +50,7 @@ const Login = () => {
             if (userInfo.role === "Student") {
               navigate("/student/overview");
             } else {
-              navigate("/admin/dashboard");
+              navigate("/teacher/overview");
             }
           },
         });

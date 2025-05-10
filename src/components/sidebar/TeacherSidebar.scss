@@ -1,0 +1,60 @@
+@import "../../constants/colors.scss";
+
+.teacher-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background-color: #1a237e; // Deep blue background
+  color: white;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+
+  .teacher-sidebar-header {
+    padding: 0 20px;
+    margin-bottom: 30px;
+    .teacher-sidebar-header-image {
+      height: 60px;
+      background-image: url("../../assets/images/student-dashboard-header.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  .teacher-sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .teacher-sidebar-item {
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+      color: #e3f2fd; // Light blue text
+
+      &:hover {
+        background-color: #283593; // Slightly lighter blue on hover
+      }
+
+      &.active {
+        background-color: #3949ab; // Active state blue
+        border-left: 4px solid #64b5f6; // Light blue accent
+      }
+
+      .teacher-sidebar-icon {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .teacher-sidebar-group {
+    background-image: url("../../assets/images/Group.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40%;
+  }
+}

@@ -1,0 +1,136 @@
+@import "../../../constants/colors.scss";
+
+.teacher-overview {
+  display: flex;
+  flex: 1;
+  .teacher-overview-container {
+    width: 60%;
+    height: 100%;
+    padding-right: 50px;
+    &.right {
+      width: 40%;
+      border-right: none;
+      padding-right: 0;
+    }
+    .teacher-overview-header {
+      width: 100%;
+      display: block;
+      margin-bottom: 4px;
+      h2 {
+        font-weight: 900;
+        color: #1a237e; // Deep blue text
+      }
+      a {
+        text-decoration: none;
+        color: #3949ab; // Medium blue link
+        cursor: pointer;
+        &:hover {
+          color: #1a237e; // Darker blue on hover
+        }
+      }
+      .teacher-datepicker-wrapper {
+        display: flex;
+        align-items: center;
+        background-color: #e3f2fd; // Light blue background
+        justify-content: center;
+        padding: 6px;
+        border-radius: 10px;
+        margin-left: auto;
+        .react-datepicker-wrapper {
+          margin-right: 8px;
+          .react-datepicker__input-container {
+            input {
+              background-color: #e3f2fd;
+              width: 90px;
+              border: none;
+              color: #1a237e; // Deep blue text
+            }
+          }
+        }
+      }
+    }
+    border-right: 1px solid #bbdefb; // Light blue border
+  }
+
+  .teacher-card-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    .teacher-card-modal-content {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      width: 450px;
+      max-height: 80%;
+      overflow-y: auto;
+      &.color-1a237e {
+        background-color: #1a237e; // Deep blue background
+      }
+      &.classes {
+        width: 600px;
+      }
+      .teacher-card-modal-header {
+        color: #fff;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .teacher-card-num-classes {
+        color: #fff;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .teacher-card-price {
+        color: #fff;
+        font-size: 20px;
+      }
+      .teacher-card-description {
+        white-space: pre-line;
+        font-size: 14px;
+        color: #e3f2fd; // Light blue text
+      }
+      .teacher-card-view-detail-btn {
+        background-color: #3949ab; // Medium blue button
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &:hover {
+          background-color: #283593; // Darker blue on hover
+        }
+      }
+    }
+  }
+
+  .teacher-lecture-list {
+    list-style: none;
+    padding: 0;
+    .teacher-lecture-item {
+      background-color: #e3f2fd; // Light blue background
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      .teacher-lecture-info {
+        width: 100%;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 8px;
+          margin-right: 15px;
+        }
+        .teacher-lecture-name {
+          color: #1a237e; // Deep blue text
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
