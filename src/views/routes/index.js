@@ -18,6 +18,7 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import TeacherOverview from "../pages/teacher/Overview";
 import TeacherProfile from "../pages/teacher/Profile";
+import TeacherSchedule from "../pages/teacher/Schedule";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AppRoutes = () => {
@@ -63,6 +64,10 @@ const AppRoutes = () => {
         <Route
           path="/teacher/overview"
           element={<TeacherLayout component={TeacherOverview} />}
+        />
+        <Route
+          path="/teacher/schedule"
+          element={<TeacherLayout component={TeacherSchedule} />}
         />
         <Route
           path="/teacher/setting"

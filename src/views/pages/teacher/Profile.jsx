@@ -3,23 +3,15 @@ import { IMAGES } from "../../../constants/images";
 import { BsGenderMale, BsGenderFemale } from "react-icons/bs";
 import { toast } from "react-toastify";
 import accountAPI from "../../../api/accountAPI";
+import { formatDateForInput } from "../../../utils/dateFormat";
 import "./Profile.scss";
 
 function TeacherProfile() {
   const userInfo = JSON.parse(localStorage.getItem("user_info")) || {};
 
-  const formatDate = (date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   const [formData, setFormData] = useState({
     ...userInfo,
-    birthday: formatDate(userInfo.birthday),
+    birthday: formatDateForInput(userInfo.birthday),
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -67,20 +59,10 @@ function TeacherProfile() {
   };
 
   const calculateAge = (birthday) => {
-    const birthDate = new Date(birthday);
-    const today = new Date();
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-
-    if (
-      today.getMonth() < birthDate.getMonth() ||
-      (today.getMonth() === birthDate.getMonth() &&
-        today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
+    const birthDate = new Date(birthday).getTime();
+    const today = new Date().getTime();
+    const ageDate = new Date(today - birthDate);
+    return ageDate.getUTCFullYear() - 1970;
   };
 
   const handlePasswordChange = async (e) => {

@@ -4,6 +4,7 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { IMAGES } from "../../../constants/images";
 import studentAPI from "../../../api/studentAPI";
 import { calculateCourseProgress } from "../../../utils/courseProgress";
+import { formatDate } from "../../../utils/dateFormat";
 import "./Overview.scss";
 import CourseCard from "../../../components/course-card/CourseCard";
 import PlanCard from "../../../components/plan-card/PlanCard";
@@ -112,7 +113,7 @@ const Overview = () => {
 
   // Lọc plans theo ngày được chọn
   const filteredPlans = classes.filter((plan) => {
-    const planDate = new Date(plan.time_start); // Chuyển "17/04/2025" thành Date
+    const planDate = new Date(plan.time_start);
     return isSameDate(planDate, selectedDate);
   });
 
@@ -228,7 +229,9 @@ const Overview = () => {
             </div>
             <ul className="lecture-list">
               {selectedCourse.classes.map((classData) => {
-                const isCompleted = new Date(classData.time_start) < new Date();
+                const isCompleted =
+                  new Date(classData.time_start).getTime() <
+                  new Date().getTime();
                 return (
                   <li key={classData.id} className="lecture-item d-flex">
                     <div className="lecture-info d-flex aligns-item-center">

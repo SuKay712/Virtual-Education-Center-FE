@@ -12,6 +12,32 @@
   transform: translateX(100%);
   animation: slide-in 0.3s forwards;
   border-radius: 20px;
+
+  &.cool {
+    background-color: #e3f2fd;
+    .modal-content {
+      .modal-header {
+        background-color: #1a2a6c;
+        h3 {
+          color: white;
+        }
+      }
+      .modal-class-info {
+        background-color: #4fc3f7;
+        color: white;
+      }
+      .modal-class-detail {
+        background-color: #e3f2fd;
+      }
+    }
+    .class-modal-submit-btn {
+      background-color: #1a2a6c;
+    }
+    .close-btn {
+      color: white;
+    }
+  }
+
   .modal-content {
     border-radius: 20px;
     max-height: 100%;
@@ -73,7 +99,7 @@
       }
     }
   }
-  .class-mobal-submit-btn {
+  .class-modal-submit-btn {
     background-color: $red-primary-color;
     color: #fff;
     font-weight: 700;

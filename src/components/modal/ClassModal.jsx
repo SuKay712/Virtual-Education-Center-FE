@@ -1,14 +1,13 @@
 import "./ClassModal.scss";
-import { FaClock } from "react-icons/fa";
-import moment from "moment";
-import { FaBookOpen } from "react-icons/fa6";
+import { FaClock, FaBookOpen } from "react-icons/fa";
+import { formatTime, formatDateTime } from "../../utils/dateFormat";
 import { IMAGES } from "../../constants/images";
 import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
-const ClassModal = ({ info, handleCloseModal }) => {
+const ClassModal = ({ info, handleCloseModal, theme }) => {
   const userInfo = JSON.parse(localStorage.getItem("user_info"));
-
+  const isTeacher = userInfo.role === "Teacher";
   const [studentAttitude, setStudentAttitude] = useState(
     info.student_attitude || ""
   );
@@ -19,10 +18,9 @@ const ClassModal = ({ info, handleCloseModal }) => {
     e.preventDefault();
     console.log("Student Attitude:", studentAttitude);
     console.log("Comment:", comment);
-    // Thực hiện logic lưu dữ liệu tại đây (gửi API hoặc cập nhật state)
   };
   return (
-    <div className="class-modal">
+    <div className={`class-modal ${theme}`}>
       <div className="modal-content">
         <button className="close-btn" onClick={handleCloseModal}>
           &times;
@@ -33,13 +31,7 @@ const ClassModal = ({ info, handleCloseModal }) => {
         <div className="modal-class-info">
           <div>
             <FaClock className="me-2" />
-            {moment(new Date(info.time_start), "HH:mm DD/MM/YYYY").format(
-              "HH:mm"
-            )}{" "}
-            -{" "}
-            {moment(new Date(info.time_end), "HH:mm DD/MM/YYYY").format(
-              "HH:mm DD/MM/YYYY"
-            )}
+            {formatTime(info.time_start)} - {formatDateTime(info.time_end)}
           </div>
           <div>
             <FaBookOpen className="me-2" />
@@ -51,7 +43,7 @@ const ClassModal = ({ info, handleCloseModal }) => {
             <div className="flex-grow-1 me-3">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <strong className="modal-class-label">Student name:</strong>
-                <span className="fw-bold">{userInfo.name}</span>
+                <span className="fw-bold">{info.student.name}</span>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <strong className="modal-class-label">Teacher name:</strong>
@@ -63,7 +55,7 @@ const ClassModal = ({ info, handleCloseModal }) => {
               </div>
             </div>
             <div>
-              <img src={IMAGES.ceo_image} alt="" />
+              <img src={userInfo.avatar} alt="" />
             </div>
           </div>
           {/* Lecture Links */}
@@ -118,6 +110,7 @@ const ClassModal = ({ info, handleCloseModal }) => {
                 className="form-select"
                 value={studentAttitude}
                 onChange={(e) => setStudentAttitude(e.target.value)}
+                disabled={!isTeacher}
               >
                 <option value="">Select attitude</option>
                 <option value="Excellent">Excellent</option>
@@ -136,6 +129,7 @@ const ClassModal = ({ info, handleCloseModal }) => {
                 onChange={(newRating) => setRating(newRating)}
                 size={24}
                 activeColor="#ffd700"
+                edit={isTeacher}
               />
             </div>
             <div className="mb-3">
@@ -148,13 +142,16 @@ const ClassModal = ({ info, handleCloseModal }) => {
                 rows="2"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+                disabled={!isTeacher}
               ></textarea>
             </div>
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="class-mobal-submit-btn">
-                Submit Evaluation
-              </button>
-            </div>
+            {isTeacher && (
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="class-modal-submit-btn">
+                  Submit Evaluation
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

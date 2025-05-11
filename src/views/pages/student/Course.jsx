@@ -155,7 +155,9 @@ function Course() {
             </div>
             <ul className="lecture-list">
               {selectedCourse.classes.map((classData) => {
-                const isCompleted = new Date(classData.time_start) < new Date();
+                const isCompleted =
+                  new Date(classData.time_start).getTime() <
+                  new Date().getTime();
                 return (
                   <li key={classData.id} className="lecture-item d-flex">
                     <div className="lecture-info d-flex aligns-item-center">

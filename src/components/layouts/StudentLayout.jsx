@@ -51,7 +51,7 @@ function StudentLayout(props) {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <div className="user-avatar">
-                <img src={IMAGES.student1_image} alt="User Avatar" />
+                <img src={userInfo.avatar} alt="User Avatar" />
               </div>
               <span className="user-name">{userInfo.name}</span>
               <i

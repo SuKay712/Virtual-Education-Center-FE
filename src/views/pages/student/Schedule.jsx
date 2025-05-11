@@ -1,7 +1,4 @@
 import "./Schedule.scss";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -9,6 +6,13 @@ import interactionPlugin from "@fullcalendar/interaction";
 import ClassModal from "../../../components/modal/ClassModal";
 import { useEffect, useState } from "react";
 import studentAPI from "../../../api/studentAPI";
+import { formatDateTime } from "../../../utils/dateFormat";
+
+export const formatTime = (timeString) => {
+  if (!timeString) return "";
+  const [time] = timeString.split(" ");
+  return time;
+};
 
 function Schedule({ props }) {
   const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái mở modal
@@ -46,8 +50,18 @@ function Schedule({ props }) {
   const events = classes.map((plan) => ({
     id: plan.id,
     title: plan.lecture.name,
-    start: plan.time_start,
-    end: plan.time_end,
+    start: new Date(
+      plan.time_start.replace(
+        /(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})/,
+        "$5-$4-$3T$1:$2:00"
+      )
+    ),
+    end: new Date(
+      plan.time_end.replace(
+        /(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})/,
+        "$5-$4-$3T$1:$2:00"
+      )
+    ),
     extendedProps: plan,
   }));
 

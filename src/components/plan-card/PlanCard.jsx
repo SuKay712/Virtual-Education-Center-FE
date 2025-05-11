@@ -1,4 +1,4 @@
-import moment from "moment";
+import { formatTime } from "../../utils/dateFormat";
 import "./index.scss";
 
 const PlanCard = ({ plan, onClick }) => {
@@ -11,15 +11,7 @@ const PlanCard = ({ plan, onClick }) => {
         <div className="plan-card-content">
           <h5>{plan.lecture.name}</h5>
           <p>
-            {new Date(plan.time_start).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}{" "}
-            -
-            {new Date(plan.time_end).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {formatTime(plan.time_start)} - {formatTime(plan.time_end)}
           </p>
         </div>
       </div>

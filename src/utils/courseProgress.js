@@ -1,3 +1,5 @@
+import { formatDateTime } from "./dateFormat";
+
 /**
  * Calculate course progress based on class start times
  * @param {Array} classes - Array of class objects with lecture and course information
@@ -25,18 +27,19 @@ export const calculateCourseProgress = (classes) => {
   const courses = Array.from(courseMap.values()).map((course) => {
     // Sort classes by time_start
     const sortedClasses = course.classes.sort(
-      (a, b) => new Date(a.time_start) - new Date(b.time_start)
+      (a, b) =>
+        new Date(a.time_start).getTime() - new Date(b.time_start).getTime()
     );
 
     // Get current time
-    const now = new Date();
+    const now = new Date().getTime();
 
     // Separate completed and upcoming classes
     const completedClasses = sortedClasses.filter(
-      (classItem) => new Date(classItem.time_start) < now
+      (classItem) => new Date(classItem.time_start).getTime() < now
     );
     const upcomingClasses = sortedClasses.filter(
-      (classItem) => new Date(classItem.time_start) > now
+      (classItem) => new Date(classItem.time_start).getTime() > now
     );
 
     // Calculate progress percentage
@@ -63,11 +66,5 @@ export const calculateCourseProgress = (classes) => {
  * @returns {string} Formatted date string
  */
 export const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleString("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  return formatDateTime(dateString);
 };

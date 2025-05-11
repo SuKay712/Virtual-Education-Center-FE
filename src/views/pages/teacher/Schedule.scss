@@ -1,0 +1,256 @@
+.teacher-schedule-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 64px);
+
+  .calendar-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+
+    .create-free-time-btn {
+      padding: 8px 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #45a049;
+      }
+
+      &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .teacher-calendar-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .fc {
+      .fc-toolbar {
+        margin-bottom: 1.5em;
+      }
+
+      .fc-button {
+        background-color: #007bff;
+        border-color: #007bff;
+        &:hover {
+          background-color: #0056b3;
+          border-color: #0056b3;
+        }
+        &.fc-button-active {
+          background-color: #0056b3;
+          border-color: #0056b3;
+        }
+      }
+
+      .fc-event {
+        cursor: pointer;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 0.85em;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .fc-timegrid-slot {
+        height: 40px;
+      }
+    }
+  }
+}
+
+.teacher-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .teacher-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    .teacher-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dee2e6;
+
+      h3 {
+        margin: 0;
+        color: #333;
+        font-size: 1.25rem;
+      }
+
+      .teacher-close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        line-height: 1;
+
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+
+    .teacher-modal-body {
+      .teacher-info-row {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: flex-start;
+
+        .teacher-label {
+          font-weight: 600;
+          color: #666;
+          width: 100px;
+          flex-shrink: 0;
+        }
+
+        .teacher-value {
+          color: #333;
+          flex-grow: 1;
+
+          &.teacher-status-1 {
+            color: #28a745;
+          }
+
+          &.teacher-status-0 {
+            color: #ffc107;
+          }
+
+          &.teacher-payment-true {
+            color: #28a745;
+          }
+
+          &.teacher-payment-false {
+            color: #dc3545;
+          }
+
+          .teacher-booking-item {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .teacher-booking-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #dee2e6;
+
+              .teacher-booking-status {
+                display: flex;
+                gap: 10px;
+
+                span {
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  font-size: 0.85em;
+                  font-weight: 500;
+
+                  &.teacher-status-1 {
+                    background-color: #28a745;
+                    color: white;
+                  }
+
+                  &.teacher-status-0 {
+                    background-color: #ffc107;
+                    color: #333;
+                  }
+
+                  &.teacher-payment-true {
+                    background-color: #28a745;
+                    color: white;
+                  }
+
+                  &.teacher-payment-false {
+                    background-color: #dc3545;
+                    color: white;
+                  }
+                }
+              }
+            }
+
+            .teacher-booking-details {
+              margin-bottom: 10px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #dee2e6;
+
+              > div {
+                margin-bottom: 5px;
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+            }
+
+            .teacher-booking-timestamps {
+              font-size: 0.9em;
+              color: #666;
+
+              > div {
+                margin-bottom: 3px;
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .teacher-schedule-container {
+    padding: 10px;
+
+    .teacher-calendar-container {
+      padding: 10px;
+    }
+  }
+
+  .teacher-modal-overlay {
+    .teacher-modal-content {
+      width: 95%;
+      margin: 10px;
+    }
+  }
+}
