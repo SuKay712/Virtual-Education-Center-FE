@@ -15,5 +15,10 @@ const studentAPI = {
     const url = "/momo-payment/payment";
     return axiosClient.application.post(url, paymentData);
   },
+
+  getBills: () => {
+    const url = "/bills";
+    return axiosClient.application.get(url);
+  },
 };
 export default studentAPI;
