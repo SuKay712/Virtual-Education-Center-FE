@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import StatisticCard from "../../../components/statistic/StatisticCard";
 import ClassModal from "../../../components/modal/ClassModal";
+import { parse } from "date-fns";
 
 const Overview = () => {
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ const Overview = () => {
     try {
       setLoading(true);
       const response = await studentAPI.getClasses();
-      setClasses(response.data);
-      const processedCourses = calculateCourseProgress(response.data);
+      setClasses(response.data.classes);
+      const processedCourses = calculateCourseProgress(response.data.classes);
       setCourses(processedCourses);
     } catch (error) {
       console.error("Error fetching classes:", error);
@@ -113,7 +114,7 @@ const Overview = () => {
 
   // Lọc plans theo ngày được chọn
   const filteredPlans = classes.filter((plan) => {
-    const planDate = new Date(plan.time_start);
+    const planDate = parse(plan.time_start, "HH:mm dd/MM/yyyy", new Date());
     return isSameDate(planDate, selectedDate);
   });
 

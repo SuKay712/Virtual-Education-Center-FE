@@ -16,6 +16,7 @@
       width: 100%;
       display: block;
       margin-bottom: 4px;
+      color: #8e650c;
       h2 {
         font-weight: 900;
       }
@@ -151,4 +152,9 @@
       }
     }
   }
+}
+
+.course-card-wrapper {
+  flex: 1;
+  min-width: 0; // Prevent flex item from overflowing
 }

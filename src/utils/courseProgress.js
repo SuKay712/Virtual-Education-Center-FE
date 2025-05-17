@@ -1,4 +1,5 @@
 import { formatDateTime } from "./dateFormat";
+import { parse } from "date-fns";
 
 /**
  * Calculate course progress based on class start times
@@ -28,7 +29,8 @@ export const calculateCourseProgress = (classes) => {
     // Sort classes by time_start
     const sortedClasses = course.classes.sort(
       (a, b) =>
-        new Date(a.time_start).getTime() - new Date(b.time_start).getTime()
+        parse(a.time_start, "HH:mm dd-MM-yyyy", new Date()).getTime() -
+        parse(b.time_start, "HH:mm dd-MM-yyyy", new Date()).getTime()
     );
 
     // Get current time
@@ -36,10 +38,14 @@ export const calculateCourseProgress = (classes) => {
 
     // Separate completed and upcoming classes
     const completedClasses = sortedClasses.filter(
-      (classItem) => new Date(classItem.time_start).getTime() < now
+      (classItem) =>
+        parse(classItem.time_start, "HH:mm dd-MM-yyyy", new Date()).getTime() <
+        now
     );
     const upcomingClasses = sortedClasses.filter(
-      (classItem) => new Date(classItem.time_start).getTime() > now
+      (classItem) =>
+        parse(classItem.time_start, "HH:mm dd-MM-yyyy", new Date()).getTime() >
+        now
     );
 
     // Calculate progress percentage

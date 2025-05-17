@@ -24,7 +24,7 @@ function Schedule({ props }) {
     try {
       setLoading(true);
       const response = await studentAPI.getClasses();
-      setClasses(response.data);
+      setClasses(response.data.classes);
     } catch (error) {
       console.error("Error fetching classes:", error);
     } finally {
@@ -67,7 +67,7 @@ function Schedule({ props }) {
 
   return (
     <div className="schedule">
-      <h2>My Schedule</h2>
+      <h2 className="schedule-header">My Schedule</h2>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

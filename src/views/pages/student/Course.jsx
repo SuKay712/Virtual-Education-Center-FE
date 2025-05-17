@@ -5,20 +5,27 @@ import { IMAGES } from "../../../constants/images";
 import { useEffect, useState } from "react";
 import studentAPI from "../../../api/studentAPI";
 import { calculateCourseProgress } from "../../../utils/courseProgress";
+import CoursePreviewModal from "../../../components/modal/CoursePreviewModal";
+import CourseDetailModal from "../../../components/modal/CourseDetailModal";
+import NotJoinedCourseDetailModal from "../../../components/modal/NotJoinedCourseDetailModal";
 
 function Course() {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [classes, setClasses] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [notJoinCourses, setNotJoinCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedNotJoinCourse, setSelectedNotJoinCourse] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   const fetchClasses = async () => {
     try {
       setLoading(true);
       const response = await studentAPI.getClasses();
-      const processedCourses = calculateCourseProgress(response.data);
+      const processedCourses = calculateCourseProgress(response.data.classes);
       setCourses(processedCourses);
+      setNotJoinCourses(response.data.otherCourses);
     } catch (error) {
       console.error("Error fetching classes:", error);
     } finally {
@@ -40,11 +47,16 @@ function Course() {
 
   const handleCloseModal = () => {
     setSelectedCourse(null);
+    setSelectedNotJoinCourse(null);
     setShowDetailsModal(false);
   };
 
   const handleCloseModalDetail = () => {
     setShowDetailsModal(false);
+  };
+
+  const handleNotJoinCourseClick = (course) => {
+    setSelectedNotJoinCourse(course);
   };
 
   // Separate courses by progress
@@ -61,11 +73,15 @@ function Course() {
   const filteredCourses = unfinished
     .sort((a, b) => b.progress - a.progress)
     .slice(0, 4);
-  console.log(filteredCourses);
   // Create rows of 2 courses each
   const courseRows = [];
   for (let i = 0; i < filteredCourses.length; i += 2) {
     courseRows.push(filteredCourses.slice(i, i + 2));
+  }
+
+  const notJoinCourseRows = [];
+  for (let i = 0; i < notJoinCourses.length; i += 2) {
+    notJoinCourseRows.push(notJoinCourses.slice(i, i + 2));
   }
 
   // Calculate statistics
@@ -84,7 +100,6 @@ function Course() {
       <div className="course-container">
         <div className="course-header d-flex gap-3 align-items-center">
           <h2>My course</h2>
-          <a href="">View all</a>
         </div>
         {loading ? (
           <p>Loading courses...</p>
@@ -98,7 +113,29 @@ function Course() {
                   onClick={() => handleCourseClick(course)}
                 />
               ))}
-              {row.length === 1 && <div className="flex-fill ms-4"></div>}
+              {row.length === 1 && <div className="flex-fill"></div>}
+            </div>
+          ))
+        ) : (
+          <p>No courses found.</p>
+        )}
+
+        <div className="course-header d-flex gap-3 align-items-center">
+          <h2>Available courses</h2>
+        </div>
+        {loading ? (
+          <p>Loading courses...</p>
+        ) : notJoinCourseRows.length > 0 ? (
+          notJoinCourseRows.map((row, index) => (
+            <div key={index} className="d-flex gap-5 mb-4">
+              {row.map((course) => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  onClick={() => handleNotJoinCourseClick(course)}
+                />
+              ))}
+              {row.length === 1 && <div className="flex-fill ms-1"></div>}
             </div>
           ))
         ) : (
@@ -106,81 +143,38 @@ function Course() {
         )}
       </div>
 
-      {/* Course Details Modal */}
+      {/* Course Preview Modal */}
       {selectedCourse && (
-        <div className="card-modal">
-          <div className={`card-modal-content color-4caf50`}>
-            <div className="position-relative d-flex justify-content-between">
-              <h3 className="card-modal-header">{selectedCourse.name}</h3>
-              <button className="card-close-btn" onClick={handleCloseModal}>
-                <i className="fa fa-times"></i>
-              </button>
-            </div>
-            <div className="d-flex justify-content-between">
-              <div>
-                <p className="card-num-classes">
-                  {selectedCourse.num_classes} classes
-                </p>
-                <p className="card-description">{selectedCourse.description}</p>
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <p className="card-price">${selectedCourse.price}</p>
-                <img src={IMAGES.france_image} alt={selectedCourse.name} />
-              </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button
-                className="card-view-detail-btn"
-                onClick={handleViewDetails}
-              >
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
+        <CoursePreviewModal
+          course={selectedCourse}
+          onClose={handleCloseModal}
+          onViewDetails={handleViewDetails}
+        />
       )}
 
-      {/* Class Details Modal */}
-      {showDetailsModal && (
-        <div className="card-modal">
-          <div className={`card-modal-content classes color-4caf50`}>
-            <div className="position-relative d-flex justify-content-between">
-              <h3 className="mb-4">Classes for {selectedCourse.name}</h3>
-              <button
-                className="card-close-btn"
-                onClick={handleCloseModalDetail}
-              >
-                <i className="fa fa-times"></i>
-              </button>
-            </div>
-            <ul className="lecture-list">
-              {selectedCourse.classes.map((classData) => {
-                const isCompleted =
-                  new Date(classData.time_start).getTime() <
-                  new Date().getTime();
-                return (
-                  <li key={classData.id} className="lecture-item d-flex">
-                    <div className="lecture-info d-flex aligns-item-center">
-                      <img
-                        src={IMAGES.france_image}
-                        alt={classData.lecture.name}
-                        className="lecture-image"
-                      />
-                      <div className="d-flex align-items-center justify-content-between flex-grow-1 me-2">
-                        <h4 className="lecture-name mb-0">
-                          {classData.lecture.name}
-                        </h4>
-                        {isCompleted && (
-                          <i className="fa fa-check-circle text-success ms-2 fa-lg"></i>
-                        )}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
+      {/* Not Joined Course Preview Modal */}
+      {selectedNotJoinCourse && (
+        <CoursePreviewModal
+          course={selectedNotJoinCourse}
+          onClose={handleCloseModal}
+          onViewDetails={() => setShowDetailModal(true)}
+        />
+      )}
+
+      {/* Course Details Modal for joined courses */}
+      {showDetailsModal && selectedCourse && (
+        <CourseDetailModal
+          course={selectedCourse}
+          onClose={handleCloseModalDetail}
+        />
+      )}
+
+      {/* Course Details Modal for not joined courses */}
+      {showDetailModal && selectedNotJoinCourse && (
+        <NotJoinedCourseDetailModal
+          course={selectedNotJoinCourse}
+          onClose={() => setShowDetailModal(false)}
+        />
       )}
 
       <div className="course-container right">
