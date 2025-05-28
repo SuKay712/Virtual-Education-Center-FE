@@ -20,12 +20,16 @@
     padding: 16px;
     padding-bottom: 0;
     .course-card-info {
-      h3 {
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: #fff;
+      .course-card-header {
+        min-height: 34px;
+        h3 {
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 8px;
+          color: #fff;
+        }
       }
+
       p {
         font-size: 10px;
         color: #fff;

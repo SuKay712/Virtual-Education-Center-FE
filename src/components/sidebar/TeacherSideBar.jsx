@@ -21,19 +21,14 @@ function TeacherSideBar() {
       icon: <FaHome className="teacher-sidebar-icon" />,
     },
     {
-      name: "My Classes",
-      path: "/teacher/classes",
-      icon: <FaChalkboardTeacher className="teacher-sidebar-icon" />,
-    },
-    {
-      name: "Students",
-      path: "/teacher/students",
-      icon: <FaUsers className="teacher-sidebar-icon" />,
-    },
-    {
       name: "Schedule",
       path: "/teacher/schedule",
       icon: <FaCalendarAlt className="teacher-sidebar-icon" />,
+    },
+    {
+      name: "History booking",
+      path: "/teacher/history-booking",
+      icon: <FaChalkboardTeacher className="teacher-sidebar-icon" />,
     },
     {
       name: "Message",

@@ -9,7 +9,9 @@ const CourseCard = ({ course, onClick }) => {
     <div className={`course-card color-4caf50`} onClick={onClick}>
       <div className="course-card-body d-flex justify-content-between">
         <div className="course-card-info d-flex flex-column">
-          <h3>{course.name}</h3>
+          <div className="course-card-header">
+            <h3>{course.name}</h3>
+          </div>
           <p>{course.num_classes} Lessons</p>
           {course.progress !== undefined ? (
             <div className="course-card-progress">
@@ -26,7 +28,9 @@ const CourseCard = ({ course, onClick }) => {
             </div>
           ) : (
             <div className="course-card-price">
-              <span>{course.price.toLocaleString("vi-VN")} VNĐ</span>
+              <span style={{ color: "yellow" }}>
+                {course.price.toLocaleString("vi-VN")} VND
+              </span>
             </div>
           )}
         </div>

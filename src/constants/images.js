@@ -10,4 +10,7 @@ export const IMAGES = {
   student_dashboard_header: require("../assets/images/student-dashboard-header.png"),
   group_image: require("../assets/images/Group.png"),
   france_image: require("../assets/images/France.png"),
+  completedClassImage: require("../assets/images/completedClass.svg").default,
+  evaluationImage: require("../assets/images/evaluation.svg").default,
+  incomeIcon: require("../assets/images/income-icon-money.svg").default,
 };

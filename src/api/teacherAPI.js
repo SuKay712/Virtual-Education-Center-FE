@@ -5,6 +5,10 @@ const teacherAPI = {
     const url = "/account/bookings";
     return axiosClient.application.get(url);
   },
+  getHistory: () => {
+    const url = "/booking/history";
+    return axiosClient.application.get(url);
+  },
   updateBookingStatus: (bookingId, formData) => {
     const url = `/booking/${bookingId}/update-status`;
     return axiosClient.application.put(url, formData);

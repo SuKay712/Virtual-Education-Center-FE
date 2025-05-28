@@ -1,10 +1,38 @@
-.teacher-schedule-container {
+.teacher-schedule-page {
   padding: 20px;
   background-color: #f8f9fa;
-  min-height: calc(100vh - 64px);
+  display: flex;
+  gap: 20px;
 
-  .calendar-header {
+  .teacher-schedule-header {
+    color: #2d3748;
+    font-size: 1.5rem;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e4e9f2;
+    font-weight: 600;
+  }
+  .react-datepicker-wrapper-wrap {
+    display: flex;
+    align-items: center;
+    background-color: #fe8e8e;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    .react-datepicker-wrapper {
+      margin-right: 8px;
+      .react-datepicker__input-container {
+        input {
+          background-color: #fe8e8e;
+          width: 90px;
+          border: none;
+        }
+      }
+    }
+  }
+  .calendar-header {
+    margin-top: 20px;
     display: flex;
     justify-content: flex-end;
 
@@ -28,44 +56,358 @@
       }
     }
   }
-
+  .teacher-schedule-container {
+    width: 70%;
+  }
   .teacher-calendar-container {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
     .fc {
-      .fc-toolbar {
-        margin-bottom: 1.5em;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+
+    .fc-toolbar {
+      margin-bottom: 1.5em;
+      flex-shrink: 0;
+    }
+
+    .fc-view-harness {
+      flex: 1;
+      overflow: auto;
+      min-height: 0;
+
+      &::-webkit-scrollbar {
+        width: 6px;
       }
 
-      .fc-button {
-        background-color: #007bff;
-        border-color: #007bff;
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+
         &:hover {
-          background-color: #0056b3;
-          border-color: #0056b3;
-        }
-        &.fc-button-active {
-          background-color: #0056b3;
-          border-color: #0056b3;
+          background: #555;
         }
       }
+    }
 
-      .fc-event {
+    .fc-button {
+      background-color: #007bff;
+      border-color: #007bff;
+
+      &:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+
+      &.fc-button-active {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+    }
+
+    .fc-event {
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.85em;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .fc-timegrid-slot {
+      height: 40px;
+    }
+  }
+}
+
+.teacher-bookings-container {
+  width: 30%;
+  padding: 20px;
+  background-color: white;
+  border-left: 1px solid #e4e9f2;
+  height: 100%;
+  overflow-y: auto;
+
+  h2 {
+    color: #2d3748;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e4e9f2;
+    font-weight: 600;
+  }
+
+  .booking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .booking-item {
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    border: 1px solid #e4e9f2;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .booking-header {
+      margin-bottom: 15px;
+
+      h3 {
+        color: #2d3748;
+        font-size: 1.2rem;
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+
+    .booking-details {
+      margin-bottom: 15px;
+      color: #4a5568;
+      font-size: 0.95rem;
+
+      div {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        strong {
+          color: #2d3748;
+          min-width: 80px;
+          font-weight: 600;
+        }
+
+        &.student-info {
+          .student-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+
+            i {
+              font-size: 0.9em;
+
+              &.fa-venus {
+                color: #ed64a6;
+              }
+
+              &.fa-mars {
+                color: #4299e1;
+              }
+            }
+
+            .student-age {
+              color: #718096;
+              font-size: 0.9em;
+            }
+          }
+        }
+      }
+    }
+
+    .booking-time {
+      margin-bottom: 20px;
+      padding: 12px;
+      background-color: #f7fafc;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border: 1px solid #e4e9f2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .time-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #4a5568;
+        font-weight: 500;
+
+        strong {
+          color: #2d3748;
+          font-weight: 600;
+          min-width: 80px;
+        }
+      }
+    }
+
+    .booking-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+
+      button {
+        flex: 1;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
         cursor: pointer;
-        padding: 2px 4px;
-        border-radius: 4px;
-        font-size: 0.85em;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
 
-        &:hover {
-          opacity: 0.9;
+        &.accept-btn {
+          background-color: #48bb78;
+          color: white;
+
+          &:hover {
+            background-color: #38a169;
+            transform: translateY(-1px);
+          }
+        }
+
+        &.reject-btn {
+          background-color: #f56565;
+          color: white;
+
+          &:hover {
+            background-color: #e53e3e;
+            transform: translateY(-1px);
+          }
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f5f7fa;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 4px;
+
+    &:hover {
+      background: #a0aec0;
+    }
+  }
+}
+
+.plan-rows {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  .plan-header {
+    margin-bottom: 20px;
+
+    h2 {
+      color: #2d3748;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f2;
+      font-weight: 600;
+    }
+  }
+
+  .plan-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .plan-item {
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #e4e9f2;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .plan-info {
+      .plan-title {
+        margin-bottom: 12px;
+
+        h3 {
+          color: #2d3748;
+          font-size: 1.1rem;
+          margin: 0 0 5px 0;
+          font-weight: 600;
+        }
+
+        .course-name {
+          color: #718096;
+          font-size: 0.9rem;
         }
       }
 
-      .fc-timegrid-slot {
-        height: 40px;
+      .plan-details {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .student-info,
+        .time-info {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #4a5568;
+          font-size: 0.95rem;
+
+          i {
+            color: #718096;
+            width: 16px;
+            text-align: center;
+
+            &.fa-venus {
+              color: #ed64a6;
+            }
+            &.fa-mars {
+              color: #4299e1;
+            }
+          }
+
+          .student-age {
+            color: #718096;
+            font-size: 0.9em;
+          }
+        }
       }
     }
   }
@@ -239,7 +581,7 @@
 
 // Responsive styles
 @media (max-width: 768px) {
-  .teacher-schedule-container {
+  .teacher-schedule-page {
     padding: 10px;
 
     .teacher-calendar-container {
