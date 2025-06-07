@@ -10,6 +10,7 @@ import ProtectedRoute from "./protected-route";
 import Homepage from "../pages/homepage";
 import StudentLayout from "../../components/layouts/StudentLayout";
 import TeacherLayout from "../../components/layouts/TeacherLayout";
+import AdminLayout from "../../components/layouts/AdminLayout";
 import Overview from "../pages/student/Overview";
 import Course from "../pages/student/Course";
 import Schedule from "../pages/student/Schedule";
@@ -21,6 +22,8 @@ import TeacherProfile from "../pages/teacher/Profile";
 import TeacherSchedule from "../pages/teacher/Schedule";
 import Bill from "../pages/student/Bill";
 import TeacherHistory from "../pages/teacher/History";
+import Accounts from "../pages/admin/Accounts";
+import Courses from "../pages/admin/Courses";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AppRoutes = () => {
@@ -82,6 +85,17 @@ const AppRoutes = () => {
         <Route
           path="/teacher/setting"
           element={<TeacherLayout component={TeacherProfile} />}
+        />
+      </Route>
+
+      <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+        <Route
+          path="/admin/accounts"
+          element={<AdminLayout component={Accounts} />}
+        />
+        <Route
+          path="/admin/courses"
+          element={<AdminLayout component={Courses} />}
         />
       </Route>
     </Routes>

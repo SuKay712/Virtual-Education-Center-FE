@@ -6,10 +6,15 @@
   color: $red-primary-color;
   border-radius: 10px;
   font-weight: 600;
-  &:hover {
-    background-color: $yellow-primary-color;
+  cursor: pointer;
+  button {
     color: $red-primary-color;
-    opacity: 0.9;
+    font-weight: 600;
+    &:hover {
+      background-color: $yellow-primary-color;
+      color: $red-primary-color;
+      opacity: 0.9;
+    }
   }
 }
 

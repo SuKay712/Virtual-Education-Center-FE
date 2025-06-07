@@ -5,10 +5,13 @@ import "./StudentLayout.scss";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AccountContext";
+import { AvatarImage } from "../../utils/avatarUtils";
 
 function StudentLayout(props) {
   const userInfo = JSON.parse(localStorage.getItem("user_info")) || {};
   const navigate = useNavigate();
+  const { account, setAccount } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
@@ -18,6 +21,7 @@ function StudentLayout(props) {
       autoClose: 1000,
       onClose: () => {
         navigate("/login");
+        setAccount(null);
       },
     });
   };
@@ -51,7 +55,7 @@ function StudentLayout(props) {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <div className="user-avatar">
-                <img src={userInfo.avatar} alt="User Avatar" />
+                <AvatarImage avatar={userInfo.avatar} />
               </div>
               <span className="user-name">{userInfo.name}</span>
               <i

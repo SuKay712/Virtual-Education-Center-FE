@@ -49,8 +49,10 @@ const Login = () => {
           onClose: () => {
             if (userInfo.role === "Student") {
               navigate("/student/overview");
-            } else {
+            } else if (userInfo.role === "Teacher") {
               navigate("/teacher/overview");
+            } else if (userInfo.role === "Admin") {
+              navigate("/admin/accounts");
             }
           },
         });

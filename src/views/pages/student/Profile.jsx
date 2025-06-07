@@ -4,6 +4,7 @@ import { BsGenderMale, BsGenderFemale } from "react-icons/bs";
 import { toast } from "react-toastify";
 import accountAPI from "../../../api/accountAPI";
 import { formatDateForInput } from "../../../utils/dateFormat";
+import { AvatarImage } from "../../../utils/avatarUtils";
 
 import "./Profile.scss";
 
@@ -105,11 +106,13 @@ function Profile() {
         <form onSubmit={handleSubmit} className="profile-form d-flex gap-4">
           {/* Avatar Column */}
           <div className="avatar-column text-center position-relative me-5">
-            <img
-              src={formData.avatar}
-              alt="Avatar"
+            <AvatarImage
+              avatar={formData.avatar}
+              style={{
+                width: "150px",
+                height: "150px",
+              }}
               className="img-fluid rounded-circle mb-3 avatar-image"
-              style={{ width: "150px", height: "150px", objectFit: "cover" }}
             />
             <label
               htmlFor="avatarUpload"

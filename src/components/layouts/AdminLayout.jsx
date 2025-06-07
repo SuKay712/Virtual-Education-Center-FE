@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import './AdminLayout.scss';
-import { Button, Layout, Menu } from 'antd';
-import Sider from 'antd/es/layout/Sider';
-import Header from '../headers';
-import { ToastContainer } from 'react-toastify';
+import React, { useState } from "react";
+import "./AdminLayout.scss";
+import { Button, Layout, Menu } from "antd";
+import Sider from "antd/es/layout/Sider";
+import { ToastContainer } from "react-toastify";
 import {
-  GiftOutlined,
-  InboxOutlined,
-  LineChartOutlined,
+  UserOutlined,
+  BookOutlined,
+  CalendarOutlined,
+  BarChartOutlined,
   LogoutOutlined,
-  SolutionOutlined,
   TeamOutlined,
-  TruckOutlined,
-} from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AccountContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AccountContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
+const { Header, Content } = Layout;
 
 function getItem(label, key, icon, children) {
   return {
@@ -31,14 +34,14 @@ function AdminLayout(props) {
   const { account, setAccount } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const userInfo = JSON.parse(localStorage.getItem("user_info")) || {};
 
   const items = [
-    getItem('Trang chủ', '/admin/dashboard', <LineChartOutlined />),
-    getItem('Sản phẩm', '/admin/products', <InboxOutlined />),
-    getItem('Đơn hàng', '/admin/order-lists', <TruckOutlined />),
-    ...(account.role === 'admin' ? [getItem('Nhân viên', '/admin/staff-account', <SolutionOutlined />)] : []),
-    getItem('Khách hàng', '/admin/customer-account', <TeamOutlined />),
-    getItem('Phiếu giảm giá', '/admin/vouchers', <GiftOutlined />),
+    getItem("Dashboard", "/admin/dashboard", <BarChartOutlined />),
+    getItem("Account Management", "/admin/accounts", <UserOutlined />),
+    getItem("Course Management", "/admin/courses", <BookOutlined />),
+    getItem("Schedule Management", "/admin/schedules", <CalendarOutlined />),
+    getItem("Teacher Management", "/admin/teachers", <TeamOutlined />),
   ];
 
   const onMenuClick = (menuItem) => {
@@ -46,39 +49,59 @@ function AdminLayout(props) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_info');
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user_info");
     setAccount(null);
-    navigate('/');
+    navigate("/");
   };
 
   return (
-    <Layout>
-      <Header userInfo={account} />
-      <Layout className="admin-layout-content-container ">
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          className="admin-layout-slider-container"
-        >
-          <div className="position-fixed" style={{ width: collapsed ? 80 : 200 }}>
-            <Menu
-              className="slider-container"
-              defaultSelectedKeys={[location.pathname]}
-              mode="inline"
-              theme="light"
-              items={items}
-              onClick={onMenuClick}
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        width={250}
+        className="admin-sider"
+      >
+        <div className="logo-container">
+          <div className="site-title">Virtual Center</div>
+        </div>
+        <Menu
+          className="admin-menu"
+          defaultSelectedKeys={[location.pathname]}
+          mode="inline"
+          theme="light"
+          items={items}
+          onClick={onMenuClick}
+        />
+        <div className="d-flex justify-content-center admin-logout-button-container">
+          <Button className="admin-logout-button" onClick={handleLogout}>
+            {!collapsed && "Logout"}
+          </Button>
+        </div>
+      </Sider>
+      <Layout className="site-layout">
+        <Header className="admin-header">
+          <div className="d-flex justify-content-between align-items-center h-100">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              className="trigger-button"
             />
-            <div className="d-flex justify-content-center admin-layout-logout-button-container">
-              <Button className="admin-layout-logout-button" icon={<LogoutOutlined />} onClick={handleLogout}>
-                {!collapsed && 'Đăng xuất'}
-              </Button>
+            <div className="admin-header-right d-flex align-items-center gap-3">
+              <div className="admin-user-info d-flex align-items-center gap-3 position-relative">
+                <span className="user-name">
+                  Xin chào quản trị viên {userInfo.name}
+                </span>
+              </div>
             </div>
           </div>
-        </Sider>
-        {props.component}
+        </Header>
+        <Content className="admin-content">
+          {props.component && <props.component />}
+        </Content>
       </Layout>
       <ToastContainer
         position="top-right"

@@ -13,4 +13,5 @@ export const IMAGES = {
   completedClassImage: require("../assets/images/completedClass.svg").default,
   evaluationImage: require("../assets/images/evaluation.svg").default,
   incomeIcon: require("../assets/images/income-icon-money.svg").default,
+  avatarDefault: require("../assets/images/avatar-default.png"),
 };

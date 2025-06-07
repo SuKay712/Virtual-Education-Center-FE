@@ -1,0 +1,90 @@
+.admin-accounts,
+.admin-courses,
+.admin-schedules,
+.admin-dashboard {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a237e;
+    }
+  }
+
+  .admin-page-content {
+    .ant-table-wrapper {
+      .ant-table {
+        .ant-table-thead > tr > th {
+          background-color: #f5f6fa;
+          color: #1a237e;
+          font-weight: 600;
+        }
+
+        .ant-table-tbody > tr:hover > td {
+          background-color: #f5f6fa;
+        }
+      }
+    }
+  }
+}
+
+// Modal styles
+.ant-modal {
+  .ant-modal-header {
+    background-color: #f5f6fa;
+    border-bottom: 1px solid #e8eaf6;
+
+    .ant-modal-title {
+      color: #1a237e;
+      font-weight: 600;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-form-item-label > label {
+    color: #1a237e;
+    font-weight: 500;
+  }
+
+  .ant-input,
+  .ant-select-selector {
+    border-color: #e8eaf6;
+    &:hover,
+    &:focus {
+      border-color: #1a237e;
+    }
+  }
+}
+
+// Button styles
+.ant-btn-primary {
+  background-color: #1a237e;
+  border-color: #1a237e;
+
+  &:hover,
+  &:focus {
+    background-color: #283593;
+    border-color: #283593;
+  }
+}
+
+.ant-btn-danger {
+  &:hover,
+  &:focus {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+  }
+}
