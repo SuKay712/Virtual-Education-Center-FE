@@ -7,6 +7,7 @@ import {
   FaHome,
   FaChalkboardTeacher,
   FaUsers,
+  FaComments,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -31,9 +32,9 @@ function TeacherSideBar() {
       icon: <FaChalkboardTeacher className="teacher-sidebar-icon" />,
     },
     {
-      name: "Message",
-      path: "/teacher/message",
-      icon: <FaEnvelope className="teacher-sidebar-icon" />,
+      name: "Chat",
+      path: "/teacher/chat",
+      icon: <FaComments className="teacher-sidebar-icon" />,
     },
     {
       name: "Setting",

@@ -1,0 +1,52 @@
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useAuth } from "../../../contexts/AccountContext";
+import ChatBox from "../../../components/Chat/ChatBox";
+import chatAPI from "../../../api/chat";
+
+const ChatContainer = styled.div`
+  display: flex;
+  height: calc(100vh - 64px);
+  background: #fff;
+`;
+
+const NoChatSelected = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  color: #999;
+  font-size: 16px;
+`;
+
+const StudentChat = () => {
+  const [selectedChat, setSelectedChat] = useState(null);
+  const { account } = useAuth();
+
+  useEffect(() => {
+    loadInitialChat();
+    // eslint-disable-next-line
+  }, []);
+
+  const loadInitialChat = async () => {
+    try {
+      const response = await chatAPI.getOrCreateChatbox();
+      setSelectedChat(response.data);
+    } catch (error) {
+      console.error("Error loading initial chat:", error);
+    }
+  };
+
+  return (
+    <ChatContainer>
+      {selectedChat ? (
+        <ChatBox chatbox={selectedChat} />
+      ) : (
+        <NoChatSelected>Loading chat...</NoChatSelected>
+      )}
+    </ChatContainer>
+  );
+};
+
+export default StudentChat;

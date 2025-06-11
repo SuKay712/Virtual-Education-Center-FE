@@ -1,7 +1,10 @@
+@import "../student/Profile.scss";
+
 .admin-accounts,
 .admin-courses,
 .admin-schedules,
-.admin-dashboard {
+.admin-dashboard,
+.admin-bookings {
   padding: 24px;
   background-color: #fff;
   border-radius: 8px;
@@ -32,6 +35,23 @@
 
         .ant-table-tbody > tr:hover > td {
           background-color: #f5f6fa;
+        }
+
+        .ant-select {
+          .ant-select-selector {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+          }
+
+          &.ant-select-focused .ant-select-selector {
+            box-shadow: none !important;
+          }
+
+          .ant-select-selection-item {
+            color: inherit !important;
+            font-weight: 500;
+          }
         }
       }
     }

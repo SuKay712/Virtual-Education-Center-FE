@@ -12,6 +12,8 @@ import {
   TeamOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  ScheduleOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AccountContext";
@@ -41,7 +43,9 @@ function AdminLayout(props) {
     getItem("Account Management", "/admin/accounts", <UserOutlined />),
     getItem("Course Management", "/admin/courses", <BookOutlined />),
     getItem("Schedule Management", "/admin/schedules", <CalendarOutlined />),
-    getItem("Teacher Management", "/admin/teachers", <TeamOutlined />),
+    getItem("Booking Management", "/admin/bookings", <ScheduleOutlined />),
+    getItem("Chat", "/admin/chat", <MessageOutlined />),
+    getItem("Setting", "/admin/setting", <UserOutlined />),
   ];
 
   const onMenuClick = (menuItem) => {

@@ -32,7 +32,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Text } = Typography;
 
-const Courses = () => {
+const AdminCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -1045,4 +1045,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default AdminCourses;

@@ -50,6 +50,36 @@ const adminAPI = {
     const url = `/theory/admin/${theoryId}`;
     return axiosClient.application.delete(url);
   },
+
+  getClasses: () => {
+    const url = "/class/admin";
+    return axiosClient.application.get(url);
+  },
+
+  updateClass: (classId, data) => {
+    const url = `/class/admin/${classId}`;
+    return axiosClient.application.put(url, data);
+  },
+
+  getFreeTimes: () => {
+    const url = "/free-times/admin";
+    return axiosClient.application.get(url);
+  },
+
+  createBooking: (formData) => {
+    const url = "/booking/admin";
+    return axiosClient.formData.post(url, formData);
+  },
+
+  getBookings: () => {
+    const url = "/booking/admin";
+    return axiosClient.application.get(url);
+  },
+
+  updateBooking: (bookingId, data) => {
+    const url = `/booking/admin/${bookingId}/update-status`;
+    return axiosClient.application.put(url, data);
+  },
 };
 
 export default adminAPI;

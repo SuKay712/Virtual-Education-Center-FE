@@ -28,6 +28,7 @@ const Login = () => {
       const res = await authAPI.login(formData);
       const accessToken = res.data.acess_token;
       const userInfo = {
+        id: res.data.id,
         name: res.data.name,
         address: res.data.address,
         avatar: res.data.avatar,

@@ -21,7 +21,7 @@ import { getAvatarUrl, AvatarImage } from "../../../utils/avatarUtils";
 
 const { Option } = Select;
 
-const Accounts = () => {
+const AdminAccounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -524,4 +524,4 @@ const Accounts = () => {
   );
 };
 
-export default Accounts;
+export default AdminAccounts;

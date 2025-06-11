@@ -6,6 +6,7 @@ import {
   FaEnvelope,
   FaHome,
   FaFileInvoiceDollar,
+  FaComments,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -35,9 +36,9 @@ function StudentSideBar() {
       icon: <FaFileInvoiceDollar className="sidebar-icon" />,
     },
     {
-      name: "Message",
-      path: "/student/message",
-      icon: <FaEnvelope className="sidebar-icon" />,
+      name: "Chat",
+      path: "/student/chat",
+      icon: <FaComments className="sidebar-icon" />,
     },
     {
       name: "Setting",

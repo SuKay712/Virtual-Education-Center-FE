@@ -22,8 +22,14 @@ import TeacherProfile from "../pages/teacher/Profile";
 import TeacherSchedule from "../pages/teacher/Schedule";
 import Bill from "../pages/student/Bill";
 import TeacherHistory from "../pages/teacher/History";
-import Accounts from "../pages/admin/Accounts";
-import Courses from "../pages/admin/Courses";
+import AdminAccount from "../pages/admin/Accounts";
+import AdminCourse from "../pages/admin/Courses";
+import AdminSchedule from "../pages/admin/Schedule";
+import BookingManagement from "../pages/admin/BookingManagement";
+import AdminChat from "../pages/admin/Chat";
+import StudentChat from "../pages/student/Chat";
+import TeacherChat from "../pages/teacher/Chat";
+import AdminProfile from "../pages/admin/AdminProfile";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AppRoutes = () => {
@@ -67,6 +73,10 @@ const AppRoutes = () => {
           path="/student/setting"
           element={<StudentLayout component={Profile} />}
         />
+        <Route
+          path="/student/chat"
+          element={<StudentLayout component={StudentChat} />}
+        />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["Teacher"]} />}>
@@ -86,16 +96,36 @@ const AppRoutes = () => {
           path="/teacher/setting"
           element={<TeacherLayout component={TeacherProfile} />}
         />
+        <Route
+          path="/teacher/chat"
+          element={<TeacherLayout component={TeacherChat} />}
+        />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
         <Route
           path="/admin/accounts"
-          element={<AdminLayout component={Accounts} />}
+          element={<AdminLayout component={AdminAccount} />}
         />
         <Route
           path="/admin/courses"
-          element={<AdminLayout component={Courses} />}
+          element={<AdminLayout component={AdminCourse} />}
+        />
+        <Route
+          path="/admin/schedules"
+          element={<AdminLayout component={AdminSchedule} />}
+        />
+        <Route
+          path="/admin/bookings"
+          element={<AdminLayout component={BookingManagement} />}
+        />
+        <Route
+          path="/admin/chat"
+          element={<AdminLayout component={AdminChat} />}
+        />
+        <Route
+          path="/admin/setting"
+          element={<AdminLayout component={AdminProfile} />}
         />
       </Route>
     </Routes>
