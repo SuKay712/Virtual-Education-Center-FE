@@ -48,7 +48,7 @@ const AdminChat = () => {
         onSelectChat={handleSelectChat}
         selectedChatId={selectedChat?.id}
       />
-      {selectedChat ? (
+      {selectedChat && selectedChat.id ? (
         <ChatBox chatbox={selectedChat} />
       ) : (
         <NoChatSelected>Select a chat to start messaging</NoChatSelected>

@@ -212,12 +212,6 @@ const AdminSchedule = () => {
         teacherIds: teacherIds,
       };
 
-      console.log("Updating class with:", {
-        startTime: startDateTime.format("HH:mm DD/MM/YYYY"),
-        endTime: endDateTime.format("HH:mm DD/MM/YYYY"),
-        teacherIds: teacherIds,
-      });
-
       try {
         const response = await adminAPI.updateClass(
           selectedClass.id,

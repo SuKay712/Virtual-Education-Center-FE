@@ -4,6 +4,10 @@ import { formatTime, formatDateTime } from "../../utils/dateFormat";
 import { IMAGES } from "../../constants/images";
 import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
+import teacherAPI from "../../api/teacherAPI";
+import adminAPI from "../../api/adminAPI";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ClassModal = ({ info, handleCloseModal, theme }) => {
   const userInfo = JSON.parse(localStorage.getItem("user_info"));
@@ -13,12 +17,86 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
   );
   const [rating, setRating] = useState(info.rating || 0);
   const [comment, setComment] = useState(info.comment || "");
+  const [viewingTheory, setViewingTheory] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Student Attitude:", studentAttitude);
-    console.log("Comment:", comment);
+  const booking =
+    info.bookings && info.bookings.length > 0 ? info.bookings[0] : null;
+
+  const handleDownloadTheory = async (theory) => {
+    try {
+      const response = await adminAPI.downloadTheory(theory.id);
+      // Create a blob from the PDF data
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(blob);
+      // Create a temporary link element
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", theory.name || `theory-${theory.id}.pdf`);
+      // Append to body, click and remove
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      // Clean up the URL
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast.error("Không thể tải file theory");
+    }
   };
+
+  const handleViewTheory = async (theory) => {
+    try {
+      const response = await adminAPI.downloadTheory(theory.id);
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      setViewingTheory({ url, name: theory.name });
+    } catch (error) {
+      toast.error("Không thể xem file theory");
+    }
+  };
+
+  const handleCloseViewer = () => {
+    if (viewingTheory?.url) {
+      window.URL.revokeObjectURL(viewingTheory.url);
+    }
+    setViewingTheory(null);
+  };
+
+  // Check if current time has passed class end time
+  const isClassEnded = () => {
+    const now = new Date();
+    const endTime = new Date(
+      info.time_end.replace(
+        /(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})/,
+        "$5-$4-$3T$1:$2:00"
+      )
+    );
+    return now > endTime;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isClassEnded()) {
+      toast.error(
+        "Chưa thể đánh giá lớp học. Vui lòng đợi đến khi lớp học kết thúc."
+      );
+      return;
+    }
+    try {
+      await teacherAPI.updateClass(info.id, {
+        rating: rating,
+        comment: comment,
+      });
+      toast.success("Đánh giá lớp học thành công!");
+      handleCloseModal();
+    } catch (error) {
+      toast.error("Không thể cập nhật đánh giá lớp học");
+    }
+  };
+
+  const isFormDisabled = !isTeacher || !isClassEnded();
+
   return (
     <div className={`class-modal ${theme}`}>
       <div className="modal-content">
@@ -61,36 +139,103 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
           {/* Lecture Links */}
           <div className="lecture-links mb-3">
             <h6 className="fw-bold modal-class-label">Class content:</h6>
-            {info.lecture.links && info.lecture.links.length > 0 ? (
-              <ul className="list-unstyled">
-                {info.lecture.links.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.title || `Lecture ${index + 1}`}
-                    </a>
-                  </li>
+            {info.lecture.theories && info.lecture.theories.length > 0 ? (
+              <div className="theory-files">
+                {info.lecture.theories.map((theory, index) => (
+                  <div key={theory.id} className="theory-file-item">
+                    <i className="fas fa-file-pdf me-2 text-danger"></i>
+                    <span className="theory-file-name">
+                      {theory.name || `Theory ${index + 1}`}
+                    </span>
+                    <div className="theory-file-actions">
+                      {/* <button
+                        onClick={() => navigate(`/theory/${theory.id}/view`)}
+                        className="theory-file-action-btn view-btn"
+                        title="View PDF"
+                      >
+                        <i className="fas fa-eye"></i>
+                      </button> */}
+                      <button
+                        onClick={() => handleDownloadTheory(theory)}
+                        className="theory-file-action-btn download-btn"
+                        title="Download PDF"
+                      >
+                        <i className="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
-              <div>
-                <p>No lecture links available.</p>
-                <p>No lecture links available.</p>
-                <p>No lecture links available.</p>
+              <div className="no-content">
+                <p>No theory files available.</p>
               </div>
             )}
           </div>
+          {/* PDF Viewer Modal */}
+          {viewingTheory && (
+            <div className="pdf-viewer-modal">
+              <div className="pdf-viewer-content">
+                <div className="pdf-viewer-header">
+                  <h5>{viewingTheory.name}</h5>
+                  <button onClick={handleCloseViewer} className="close-btn">
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+                <iframe
+                  src={viewingTheory.url}
+                  title="PDF Viewer"
+                  className="pdf-viewer-iframe"
+                />
+              </div>
+            </div>
+          )}
           <div className="class-bookings">
             <div className="d-flex align-items-center justify-content-between">
               <p className="modal-class-label">Booking status: </p>
               {info.bookings && info.bookings.length > 0 ? (
-                <div>
-                  <span className="status-circle bg-success me-2"></span>
-                  <span className="fw-bold text-success">Complete</span>
-                </div>
+                (() => {
+                  const booking = info.bookings[0];
+                  let statusText = "";
+                  let textClass = "";
+                  let circleClass = "";
+                  switch (booking.status) {
+                    case 0:
+                      statusText = "Pending";
+                      textClass = "text-secondary";
+                      circleClass = "bg-secondary";
+                      break;
+                    case 1:
+                      statusText = "Approved";
+                      textClass = "text-primary";
+                      circleClass = "bg-primary";
+                      break;
+                    case 2:
+                      statusText = "Canceled";
+                      textClass = "text-danger";
+                      circleClass = "bg-danger";
+                      break;
+                    case 3:
+                      statusText = "Completed";
+                      textClass = "text-success";
+                      circleClass = "bg-success";
+                      break;
+                    default:
+                      statusText = "Unknown";
+                      textClass = "text-muted";
+                      circleClass = "bg-light";
+                  }
+                  return (
+                    <div>
+                      <span
+                        className={`status-circle ${circleClass} me-2`}
+                      ></span>
+                      <span className={`fw-bold ${textClass}`}>
+                        {statusText}
+                      </span>
+                    </div>
+                  );
+                })()
               ) : (
                 <div>
                   <span className="status-circle bg-warning me-2"></span>
@@ -101,24 +246,12 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
           </div>
           <form onSubmit={handleSubmit} className="class-evaluation-form mt-3">
             <h5 className="fw-bold">Class evaluation</h5>
-            <div className="">
-              <label htmlFor="studentAttitude" className="form-label">
-                Student Attitude
-              </label>
-              <select
-                id="studentAttitude"
-                className="form-select"
-                value={studentAttitude}
-                onChange={(e) => setStudentAttitude(e.target.value)}
-                disabled={!isTeacher}
-              >
-                <option value="">Select attitude</option>
-                <option value="Excellent">Excellent</option>
-                <option value="Good">Good</option>
-                <option value="Average">Average</option>
-                <option value="Poor">Poor</option>
-              </select>
-            </div>
+            {!isClassEnded() && (
+              <div className="alert alert-warning">
+                Chưa thể đánh giá lớp học. Vui lòng đợi đến khi lớp học kết
+                thúc.
+              </div>
+            )}
             <div className="d-flex align-items-center">
               <label htmlFor="rating" className="form-label mb-0 me-3">
                 Rating
@@ -129,7 +262,7 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
                 onChange={(newRating) => setRating(newRating)}
                 size={24}
                 activeColor="#ffd700"
-                edit={isTeacher}
+                edit={!isFormDisabled}
               />
             </div>
             <div className="mb-3">
@@ -142,12 +275,16 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
                 rows="2"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                disabled={!isTeacher}
+                disabled={isFormDisabled}
               ></textarea>
             </div>
             {isTeacher && (
               <div className="d-flex justify-content-center">
-                <button type="submit" className="class-modal-submit-btn">
+                <button
+                  type="submit"
+                  className="class-modal-submit-btn"
+                  disabled={isFormDisabled}
+                >
                   Submit Evaluation
                 </button>
               </div>

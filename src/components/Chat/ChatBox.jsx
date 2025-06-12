@@ -1,56 +1,57 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Avatar, Input, Button, List, Typography } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import { Avatar, Input, Button, Typography } from "antd";
 import { useAuth } from "../../contexts/AccountContext";
 import chatAPI from "../../api/chat";
 import { getAvatarUrl } from "../../utils/avatarUtils";
 import dayjs from "dayjs";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import { socketService } from "../../services/socketService";
 import "./ChatBox.scss";
 
 const { Text } = Typography;
+dayjs.extend(isSameOrAfter);
 
 const ChatBox = ({ chatbox }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
   const { account } = useAuth();
-  console.log("account:", account);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   useEffect(() => {
-    if (chatbox) {
-      loadMessages();
-      const interval = setInterval(loadMessages, 5000);
-      return () => clearInterval(interval);
-    }
+    if (!chatbox || !chatbox.id) return;
+    const loadMessages = async () => {
+      const response = await chatAPI.getChatHistory(chatbox.id);
+      setMessages(response.data);
+    };
+    loadMessages();
   }, [chatbox]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (!chatbox || !chatbox.id) return;
+    const handleNewMessage = (message) => {
+      const msgChatboxId = String(message.chatbox?.id || message.chatboxId);
+      if (chatbox && msgChatboxId === String(chatbox.id)) {
+        setMessages((prevMessages) => {
+          if (prevMessages.some((m) => m.id === message.id))
+            return prevMessages;
+          return [...prevMessages, message];
+        });
+      }
+    };
+    socketService.addMessageHandler(chatbox.id, handleNewMessage);
+    return () => {
+      socketService.removeMessageHandler(chatbox.id, handleNewMessage);
+    };
+  }, [chatbox]);
 
-  const loadMessages = async () => {
-    try {
-      const response = await chatAPI.getChatHistory(chatbox.id);
-      setMessages(response.data);
-    } catch (error) {
-      console.error("Error loading messages:", error);
-    }
-  };
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
-
-    try {
-      await chatAPI.sendMessage(chatbox.id, newMessage);
-      setNewMessage("");
-      loadMessages();
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
+    await chatAPI.sendMessage(chatbox.id, newMessage);
+    setNewMessage("");
   };
 
   const handleKeyPress = (e) => {
@@ -68,7 +69,7 @@ const ChatBox = ({ chatbox }) => {
       return {
         id: chatbox.chatGroup?.id,
         name: "Admin Group",
-        avatar: "", // Admin group avatar if needed
+        avatar: "",
       };
     }
   };
@@ -83,54 +84,67 @@ const ChatBox = ({ chatbox }) => {
     }
   };
 
-  const messageList = messages;
-
   return (
     <div className="chatbox-container">
       <div className="message-list">
-        {messageList.map((message, idx) => {
-          const isSent = String(message.sender?.id) === String(account.id);
-          console.log(
-            "account.id:",
-            account.id,
-            "| message.sender.id:",
-            message.sender?.id,
-            "| isSent:",
-            isSent
-          );
-          return (
-            <div
-              className={`message-item ${isSent ? "sent" : "received"}`}
-              key={message.id || idx}
-            >
-              <div className={`sender-name ${isSent ? "sent" : "received"}`}>
-                {message.sender?.name}
-              </div>
-              <div className={`message-row ${isSent ? "sent" : "received"}`}>
-                {!isSent && (
-                  <Avatar
-                    src={getAvatarUrl(message.sender?.avatar)}
-                    className="message-avatar"
-                  />
+        {(() => {
+          let lastDate = null;
+          return messages.map((message) => {
+            const isSent = String(message.sender?.id) === String(account.id);
+            const msgDate = dayjs(message.created_at).format("DD/MM/YYYY");
+            const showDateDivider = msgDate !== lastDate;
+            lastDate = msgDate;
+            return (
+              <React.Fragment key={message.id}>
+                {showDateDivider && (
+                  <div className="date-divider">
+                    <span>{msgDate}</span>
+                  </div>
                 )}
-                <div
-                  className={`message-content ${isSent ? "sent" : "received"}`}
-                >
-                  <Text>{message.content}</Text>
-                  <span className="message-time">
-                    {dayjs(message.created_at).format("HH:mm DD/MM/YY")}
-                  </span>
+                <div className={`message-item ${isSent ? "sent" : "received"}`}>
+                  <div
+                    className={`sender-name ${isSent ? "sent" : "received"}`}
+                  >
+                    {message.sender?.name}
+                  </div>
+                  <div
+                    className={`message-row ${isSent ? "sent" : "received"}`}
+                  >
+                    {!isSent && (
+                      <Avatar
+                        src={getAvatarUrl(message.sender?.avatar)}
+                        className="message-avatar"
+                      />
+                    )}
+                    <div className="message-bubble-group">
+                      {isSent && (
+                        <span className="message-time">
+                          {dayjs(message.created_at).format("HH:mm")}
+                        </span>
+                      )}
+                      <div
+                        className={`message-content ${isSent ? "sent" : "received"}`}
+                      >
+                        <Text>{message.content}</Text>
+                      </div>
+                      {!isSent && (
+                        <span className="message-time">
+                          {dayjs(message.created_at).format("HH:mm")}
+                        </span>
+                      )}
+                    </div>
+                    {isSent && (
+                      <Avatar
+                        src={getAvatarUrl(message.sender?.avatar)}
+                        className="message-avatar"
+                      />
+                    )}
+                  </div>
                 </div>
-                {isSent && (
-                  <Avatar
-                    src={getAvatarUrl(message.sender?.avatar)}
-                    className="message-avatar"
-                  />
-                )}
-              </div>
-            </div>
-          );
-        })}
+              </React.Fragment>
+            );
+          });
+        })()}
         <div ref={messagesEndRef} />
       </div>
       <div className="input-container">

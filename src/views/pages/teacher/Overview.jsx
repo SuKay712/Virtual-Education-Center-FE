@@ -13,6 +13,7 @@ import StatisticCard from "../../../components/statistic/StatisticCard";
 import ClassModal from "../../../components/modal/ClassModal";
 import { IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
+import dayjs from "dayjs";
 
 import {
   LineChart,
@@ -43,12 +44,7 @@ const Overview = () => {
       const upcoming = res.data.filter(
         (b) =>
           b.status === 1 &&
-          new Date(
-            b.classEntity.time_start.replace(
-              /(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})/,
-              "$5-$4-$3T$1:$2:00"
-            )
-          ) > now
+          dayjs(b.classEntity.time_start, "HH:mm DD/MM/YYYY").isAfter(now)
       );
       setUpcomingClasses(upcoming);
 
@@ -63,12 +59,10 @@ const Overview = () => {
         });
         const count = res.data.filter((b) => {
           if (b.status !== 1) return false;
-          const classDate = new Date(
-            b.classEntity.time_start.replace(
-              /(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})/,
-              "$5-$4-$3T$1:$2:00"
-            )
-          );
+          const classDate = dayjs(
+            b.classEntity.time_start,
+            "HH:mm DD/MM/YYYY"
+          ).toDate();
           return (
             classDate.getDate() === day.getDate() &&
             classDate.getMonth() === day.getMonth() &&
@@ -81,6 +75,101 @@ const Overview = () => {
     };
     fetchBookings();
   }, []);
+
+  // Calculate income based on completed bookings (status = 2)
+  const calculateIncome = () => {
+    const now = dayjs();
+    const startOfMonth = now.startOf("month");
+    const endOfMonth = now.endOf("month");
+
+    // Calculate current month's completed income
+    const currentMonthCompletedBookings = bookings.filter((booking) => {
+      const bookingDate = dayjs(
+        booking.classEntity.time_end,
+        "HH:mm DD/MM/YYYY"
+      );
+      return (
+        booking.status === 2 &&
+        bookingDate.isAfter(startOfMonth) &&
+        bookingDate.isBefore(endOfMonth)
+      );
+    });
+    const currentMonthCompletedIncome =
+      currentMonthCompletedBookings.length * 50000;
+
+    // Calculate current month's upcoming income (status = 1)
+    const currentMonthUpcomingBookings = bookings.filter((booking) => {
+      const bookingDate = dayjs(
+        booking.classEntity.time_start,
+        "HH:mm DD/MM/YYYY"
+      );
+      return (
+        booking.status === 1 &&
+        bookingDate.isAfter(startOfMonth) &&
+        bookingDate.isBefore(endOfMonth)
+      );
+    });
+    const currentMonthUpcomingIncome =
+      currentMonthUpcomingBookings.length * 50000;
+
+    // Total estimated income for current month
+    const currentMonthTotalIncome =
+      currentMonthCompletedIncome + currentMonthUpcomingIncome;
+
+    // Calculate last month's income for comparison
+    const lastMonthStart = startOfMonth.subtract(1, "month");
+    const lastMonthEnd = endOfMonth.subtract(1, "month");
+    const lastMonthBookings = bookings.filter((booking) => {
+      const bookingDate = dayjs(
+        booking.classEntity.time_end,
+        "HH:mm DD/MM/YYYY"
+      );
+      return (
+        booking.status === 2 &&
+        bookingDate.isAfter(lastMonthStart) &&
+        bookingDate.isBefore(lastMonthEnd)
+      );
+    });
+    const lastMonthIncome = lastMonthBookings.length * 50000;
+
+    // Calculate percentage change
+    let percentageChange = 0;
+    if (lastMonthIncome === 0) {
+      percentageChange = currentMonthTotalIncome > 0 ? 100 : 0;
+    } else {
+      percentageChange =
+        ((currentMonthTotalIncome - lastMonthIncome) / lastMonthIncome) * 100;
+    }
+
+    return {
+      current: currentMonthTotalIncome,
+      completed: currentMonthCompletedIncome,
+      upcoming: currentMonthUpcomingIncome,
+      lastMonth: lastMonthIncome,
+      percentageChange: Math.round(percentageChange),
+    };
+  };
+
+  // Calculate classes needing evaluation
+  const calculateClassesNeedingEvaluation = () => {
+    const now = new Date();
+    return bookings.filter((booking) => {
+      const timeEnd = dayjs(
+        booking.classEntity.time_end,
+        "HH:mm DD/MM/YYYY"
+      ).toDate();
+      return (
+        timeEnd < now && // Class has ended
+        !booking.classEntity.rating && // No rating yet
+        booking.status === 2 // Booking is completed
+      );
+    }).length;
+  };
+
+  // Calculate completed classes
+  const calculateCompletedClasses = () => {
+    return bookings.filter((booking) => booking.status === 2).length;
+  };
 
   const totalPages = Math.ceil(upcomingClasses.length / classesPerPage);
 
@@ -97,11 +186,11 @@ const Overview = () => {
     <div className="teacher-overview gap-5">
       <div className="teacher-overview-container">
         <div className="teacher-overview-header d-flex gap-3 align-items-center">
-          <h2>Overview</h2>
+          <h2>Tổng quan</h2>
         </div>
         <div className="upcoming-classes">
           <div className="upcoming-classes-header">
-            <h3>Upcoming classes</h3>
+            <h3>Lớp học sắp tới</h3>
             <div className="upcoming-classes-nav">
               <button onClick={handlePrev} disabled={currentPage === 0}>
                 &laquo;
@@ -117,10 +206,8 @@ const Overview = () => {
           <div className="upcoming-classes-list">
             {pagedClasses.length === 0 ? (
               <div className="no-upcoming-class-card">
-                <h4>No upcoming class</h4>
-                <p>
-                  Let's accept some class on the booking panel to get started!
-                </p>
+                <h4>Không có lớp học sắp tới</h4>
+                <p>Hãy chấp nhận một số lớp học từ bảng đặt lịch để bắt đầu!</p>
               </div>
             ) : (
               pagedClasses.map((b) => {
@@ -159,8 +246,8 @@ const Overview = () => {
                     </div>
                     <div className="class-info-row d-flex align-items-center">
                       <div className="class-icon-col">
-                        <div className="label">Name</div>
-                        <div className="label">Age</div>
+                        <div className="label">Tên</div>
+                        <div className="label">Tuổi</div>
                       </div>
                       <div className="class-info-col">
                         <span className="value" style={{ fontSize: "14px" }}>
@@ -172,7 +259,9 @@ const Overview = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-center">
-                      <button className="join-class-btn">Join class</button>
+                      <button className="join-class-btn">
+                        Tham gia lớp học
+                      </button>
                     </div>
                   </div>
                 );
@@ -183,7 +272,7 @@ const Overview = () => {
         {/* Dashboard section */}
         <div className="dashboard-row">
           <div className="dashboard-chart">
-            <h3>Income for the past 14 days</h3>
+            <h3>Thu nhập 14 ngày gần đây</h3>
             <ResponsiveContainer width="100%" height={160}>
               <LineChart
                 data={frequencyData}
@@ -198,12 +287,55 @@ const Overview = () => {
             </ResponsiveContainer>
           </div>
           <div className="dashboard-income">
-            <h4>Estimated income this month</h4>
-            <div style={{ fontSize: 24, fontWeight: 700, color: "#ff5a36" }}>
-              0₫
+            <div className="income-header">
+              <h4>Thu nhập ước tính tháng này</h4>
+              <div className="income-period">Tháng hiện tại</div>
             </div>
-            <div style={{ fontSize: 13, color: "#4caf50", marginTop: 4 }}>
-              ↑ 0% (0₫) for last month
+            <div className="income-main">
+              <div className="income-amount">
+                {calculateIncome().current.toLocaleString()}₫
+              </div>
+              <div className="income-comparison">
+                {calculateIncome().lastMonth === 0 ? (
+                  <div className="first-month">
+                    <span className="dot"></span>
+                    Tháng đầu tiên có thu nhập
+                  </div>
+                ) : (
+                  <div
+                    className={`trend ${calculateIncome().percentageChange >= 0 ? "up" : "down"}`}
+                  >
+                    <span className="trend-icon">
+                      {calculateIncome().percentageChange >= 0 ? "↑" : "↓"}
+                    </span>
+                    <span className="trend-value">
+                      {Math.abs(calculateIncome().percentageChange)}%
+                    </span>
+                    <span className="trend-amount">
+                      (
+                      {Math.abs(
+                        calculateIncome().current - calculateIncome().lastMonth
+                      ).toLocaleString()}
+                      ₫)
+                    </span>
+                    <span className="trend-label">so với tháng trước</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="income-details">
+              <div className="detail-item completed">
+                <div className="detail-label">Đã hoàn thành</div>
+                <div className="detail-value">
+                  {calculateIncome().completed.toLocaleString()}₫
+                </div>
+              </div>
+              <div className="detail-item upcoming">
+                <div className="detail-label">Sắp tới</div>
+                <div className="detail-value">
+                  {calculateIncome().upcoming.toLocaleString()}₫
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -216,10 +348,10 @@ const Overview = () => {
             />
             <div>
               <div style={{ fontSize: 28, color: "#ff5a36", fontWeight: 600 }}>
-                20
+                {calculateClassesNeedingEvaluation()}
               </div>
               <div style={{ fontSize: 15, color: "#222" }}>
-                Classes need evaluations
+                Lớp học cần đánh giá
               </div>
             </div>
           </div>
@@ -231,10 +363,10 @@ const Overview = () => {
             />
             <div>
               <div style={{ fontSize: 28, color: "#4caf50", fontWeight: 600 }}>
-                0
+                {calculateCompletedClasses()}
               </div>
               <div style={{ fontSize: 15, color: "#222" }}>
-                Completed classes
+                Lớp học đã hoàn thành
               </div>
             </div>
           </div>

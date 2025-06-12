@@ -13,6 +13,12 @@ const teacherAPI = {
     const url = `/booking/${bookingId}/update-status`;
     return axiosClient.application.put(url, formData);
   },
+
+  updateClass: (classId, formData) => {
+    const url = `/class/${classId}/update`;
+    return axiosClient.application.put(url, formData);
+  },
+
   createFreeTime: (formData) => {
     const url = "/free-times/create";
     return axiosClient.application.post(url, formData);

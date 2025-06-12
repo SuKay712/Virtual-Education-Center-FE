@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import AllRoutes from "./views/routes/index";
-import { AuthProvider } from "./contexts/AccountContext";
+import { AuthProvider, useAuth } from "./contexts/AccountContext";
 import AuthWrapper from "./AuthWrapper";
 import { BubbleChat } from "flowise-embed-react";
 import { FullPageChat } from "flowise-embed-react";
-
+import { socketService } from "./services/socketService";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { notificationSocketService } from "./services/notificationSocketService";
+
+function SocketConnector() {
+  const { account } = useAuth();
+  useEffect(() => {
+    if (account?.id) {
+      socketService.connect(account.id);
+      notificationSocketService.connect(account.id);
+    }
+    // Không disconnect ở đây, chỉ disconnect khi logou t hoặc app unmount nếu cần
+    // return () => socketService.disconnect();
+  }, [account?.id]);
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <SocketConnector />
         <AuthWrapper>
           <AllRoutes />
           <BubbleChat

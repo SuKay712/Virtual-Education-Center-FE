@@ -44,7 +44,7 @@ const TeacherChat = () => {
 
   return (
     <ChatContainer>
-      {selectedChat ? (
+      {selectedChat && selectedChat.id ? (
         <ChatBox chatbox={selectedChat} />
       ) : (
         <NoChatSelected>Select a chat to start messaging</NoChatSelected>
