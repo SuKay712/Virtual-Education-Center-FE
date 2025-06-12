@@ -31,7 +31,6 @@
   }
 }
 .programs-container {
-  min-height: 1400px;
   background-color: #ffffff;
   .programs-title {
     margin-top: 40px;
@@ -92,6 +91,35 @@
   .orange-primary {
     color: #fb5353;
     font-weight: 800;
+  }
+  .programs-arrow-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: #d35400;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      box-shadow 0.2s;
+    z-index: 10;
+    &:hover:not(:disabled) {
+      background: #ffe59e;
+      color: #ff8000;
+      box-shadow: 0 4px 16px rgba(255, 128, 0, 0.15);
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   }
 }
 .teachers-container {
@@ -199,5 +227,46 @@
       width: 50%; // Độ dài đường kẻ (tùy chỉnh)
       margin-top: 0px;
     }
+  }
+}
+.programs-fade-wrapper {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+}
+.fade-in {
+  opacity: 1;
+}
+.fade-out {
+  opacity: 0;
+}
+.floating-consult-btn {
+  position: fixed;
+  right: 36px;
+  bottom: 36px;
+  z-index: 1200;
+  background: #ff8000;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: 32px;
+  padding: 18px 36px;
+  box-shadow: 0 4px 24px rgba(255, 128, 0, 0.18);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  outline: none;
+  &:hover {
+    background: #fb5353;
+    box-shadow: 0 8px 32px rgba(255, 83, 83, 0.18);
+  }
+}
+@media (max-width: 600px) {
+  .floating-consult-btn {
+    right: 10px;
+    bottom: 10px;
+    padding: 12px 18px;
+    font-size: 1rem;
   }
 }

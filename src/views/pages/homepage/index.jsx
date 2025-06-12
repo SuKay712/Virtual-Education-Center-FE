@@ -4,8 +4,53 @@ import RegisterButton from "../../../components/buttons/RegisterButton";
 import { IMAGES } from "../../../constants/images";
 import { PiStudent } from "react-icons/pi";
 import { FaRegClock } from "react-icons/fa";
+import LearningPathSection from "../../../components/LearningPathSection";
+import EnglishRoadmapSection from "../../../components/EnglishRoadmapSection";
+import ContactConsultModal from "../../../components/ContactConsultModal";
+import { useEffect, useState } from "react";
+import authAPI from "../../../api/auth";
 
 function Homepage() {
+  const [courses, setCourses] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [fade, setFade] = useState("in");
+  const [showModal, setShowModal] = useState(false);
+  const COURSES_PER_PAGE = 3;
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await authAPI.getCourses();
+        setCourses(res.data);
+      } catch (err) {
+        setCourses([]);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  const handleChangePage = (next) => {
+    setFade("out");
+    setTimeout(() => {
+      setStartIndex((prev) => {
+        if (next) {
+          return Math.min(
+            prev + COURSES_PER_PAGE,
+            courses.length - COURSES_PER_PAGE
+          );
+        } else {
+          return Math.max(prev - COURSES_PER_PAGE, 0);
+        }
+      });
+      setFade("in");
+    }, 300);
+  };
+
+  const visibleCourses = courses.slice(
+    startIndex,
+    startIndex + COURSES_PER_PAGE
+  );
+
   return (
     <div>
       <Navbar />
@@ -45,61 +90,57 @@ function Homepage() {
       </div>
       <div id="programs" className="programs-container">
         <div className="d-flex flex-column justify-content-center align-items-center">
-          <h4 className="programs-title">Chương trình học</h4>
-          <p className="programs-description">
-            Chương trình học được thiết kế theo tiêu chuẩn quốc tế, giúp bạn có
-            thể tiếp cận với những kiến thức mới nhất.
-          </p>
-        </div>
-        <div className="programs-banner">
-          <img
-            src={IMAGES.program_banner}
-            alt="Descriptive Alt Text"
-            style={{ maxWidth: "60%", height: "auto" }}
-          />
-        </div>
-        <div className="d-flex flex-column justify-content-center align-items-center">
           <h4 className="programs-title">Các khóa học của Virtual Center</h4>
-          <div className="d-flex justify-content-center align-items-center mt-5">
-            <div className="programs-card">
-              <img
-                src={IMAGES.program_img_1}
-                alt="Khóa học 1"
-                className="programs-card-img"
-              />
-              <div className="programs-card-body">
-                <h5 className="programs-card-title">Khóa học 1</h5>
-                <p className="programs-card-text">
-                  Mô tả ngắn gọn về khóa học 1.
-                </p>
-              </div>
+          <div
+            className="d-flex justify-content-center align-items-center mt-5 position-relative"
+            style={{ minHeight: 350 }}
+          >
+            <button
+              className="programs-arrow-btn left"
+              onClick={() => handleChangePage(false)}
+              disabled={startIndex === 0 || fade === "out"}
+              style={{ position: "absolute", left: 100, top: "30%", zIndex: 2 }}
+            >
+              &#8592;
+            </button>
+            <div
+              className={`programs-fade-wrapper ${fade === "in" ? "fade-in" : "fade-out"} d-flex`}
+              style={{ width: "100%", justifyContent: "center" }}
+            >
+              {visibleCourses.length > 0 ? (
+                visibleCourses.map((course) => (
+                  <div className="programs-card mx-3" key={course.id}>
+                    <img
+                      src={IMAGES.program_img_1}
+                      alt={course.name}
+                      className="programs-card-img"
+                    />
+                    <div className="programs-card-body">
+                      <h5 className="programs-card-title">{course.name}</h5>
+                      <p className="programs-card-text">{course.description}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>Không có khóa học nào.</p>
+              )}
             </div>
-            <div className="programs-card mx-5">
-              <img
-                src={IMAGES.program_img_1}
-                alt="Khóa học 1"
-                className="programs-card-img"
-              />
-              <div className="programs-card-body">
-                <h5 className="programs-card-title">Khóa học 1</h5>
-                <p className="programs-card-text">
-                  Mô tả ngắn gọn về khóa học 1.
-                </p>
-              </div>
-            </div>
-            <div className="programs-card">
-              <img
-                src={IMAGES.program_img_1}
-                alt="Khóa học 1"
-                className="programs-card-img"
-              />
-              <div className="programs-card-body">
-                <h5 className="programs-card-title">Khóa học 1</h5>
-                <p className="programs-card-text">
-                  Mô tả ngắn gọn về khóa học 1.
-                </p>
-              </div>
-            </div>
+            <button
+              className="programs-arrow-btn right"
+              onClick={() => handleChangePage(true)}
+              disabled={
+                startIndex + COURSES_PER_PAGE >= courses.length ||
+                fade === "out"
+              }
+              style={{
+                position: "absolute",
+                right: 100,
+                top: "30%",
+                zIndex: 2,
+              }}
+            >
+              &#8594;
+            </button>
           </div>
         </div>
         <div className="programs-describe">
@@ -110,21 +151,20 @@ function Homepage() {
               className="programs-describe-img"
             />
             <div className="programs-describe-content">
-              <h5 className="programs-describe-title">Individual</h5>
+              <h5 className="programs-describe-title">Dạy học 1 kèm 1</h5>
               <hr className="programs-describe-divider" />
               <div className="programs-describe-body">
                 <div className="d-flex align-items-center mb-2">
                   <PiStudent />
                   <div className="ms-2">
                     <span className="orange-primary">1</span> v
-                    <span className="orange-primary"> 1</span> Class
+                    <span className="orange-primary"> 1</span> trực tuyến
                   </div>
                 </div>
                 <div className="d-flex align-items-center mb-2">
                   <FaRegClock />
                   <div className="ms-2">
-                    <span className="orange-primary">25</span> mins or
-                    <span className="orange-primary"> 50</span> mins
+                    <span className="orange-primary">60</span> phút
                   </div>
                 </div>
               </div>
@@ -132,6 +172,8 @@ function Homepage() {
           </div>
         </div>
       </div>
+      <LearningPathSection />
+      <EnglishRoadmapSection />
       <div id="teachers" className="teachers-container">
         <p className="teachers-title">200+ Giáo viên CÓ CHỨNG CHỈ GIẢNG DẠY</p>
         <p className="teachers-description">
@@ -273,6 +315,17 @@ function Homepage() {
           </div>
         </div>
       </div>
+      <button
+        className="floating-consult-btn"
+        onClick={() => setShowModal(true)}
+        title="Nhận tư vấn miễn phí"
+      >
+        Nhận tư vấn miễn phí
+      </button>
+      <ContactConsultModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 }

@@ -80,6 +80,16 @@ const adminAPI = {
     const url = `/booking/admin/${bookingId}/update-status`;
     return axiosClient.application.put(url, data);
   },
+
+  getContacts: () => {
+    const url = "/contacts";
+    return axiosClient.application.get(url);
+  },
+
+  updateContact: (contactId, formData) => {
+    const url = `/contacts/${contactId}/status`;
+    return axiosClient.application.put(url, formData);
+  },
 };
 
 export default adminAPI;

@@ -44,6 +44,7 @@ function AdminLayout(props) {
     getItem("Course Management", "/admin/courses", <BookOutlined />),
     getItem("Schedule Management", "/admin/schedules", <CalendarOutlined />),
     getItem("Booking Management", "/admin/bookings", <ScheduleOutlined />),
+    getItem("Contact Management", "/admin/contacts", <TeamOutlined />),
     getItem("Chat", "/admin/chat", <MessageOutlined />),
     getItem("Setting", "/admin/setting", <UserOutlined />),
   ];

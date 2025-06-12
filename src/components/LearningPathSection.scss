@@ -1,0 +1,191 @@
+.learning-path-section {
+  width: 100%;
+  background: #e0f2ff;
+  padding: 0;
+  margin: 0;
+
+  .students-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 32px 0 24px 0;
+    img {
+      max-width: 900px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px #b3b3b3;
+      object-fit: cover;
+    }
+  }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    margin: 0 auto;
+    max-width: 950px;
+    padding: 40px 0 64px 0;
+    .feature {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: #fff;
+      border-radius: 36px;
+      box-shadow: 0 8px 32px #e0e0e0;
+      padding: 48px 56px 48px 56px;
+      min-height: 260px;
+      overflow: visible;
+      margin-left: 0;
+      margin-right: 0;
+
+      .feature-content {
+        flex: 1;
+        z-index: 2;
+        h2 {
+          color: #ff8000;
+          font-size: 2.6rem;
+          font-weight: bold;
+          margin-bottom: 16px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          text-shadow:
+            0 2px 8px #ffe59e,
+            0 1px 0 #fff;
+          position: relative;
+          display: inline-block;
+          &::after {
+            content: "";
+            display: block;
+            margin: 10px auto 0 auto;
+            width: 60px;
+            height: 6px;
+            background: #ff8000;
+            border-radius: 3px;
+          }
+        }
+        p {
+          color: #444;
+          font-size: 1.18rem;
+          line-height: 1.8;
+        }
+      }
+      .feature-character {
+        position: absolute;
+        bottom: -32px;
+        z-index: 3;
+        height: auto;
+        pointer-events: none;
+        filter: drop-shadow(0 8px 24px #b3b3b3);
+        transition: width 0.2s;
+      }
+    }
+    // Block-specific overrides
+    .feature-fun-learning {
+      background: linear-gradient(90deg, #f8fcff 60%, #e0f2ff 100%);
+      .feature-character {
+        left: -250px;
+        right: auto;
+        width: 500px;
+      }
+      .feature-content {
+        margin-left: 80px;
+      }
+    }
+    .feature-guaranteed-work {
+      background: linear-gradient(90deg, #fffbe7 60%, #ffe59e 100%);
+      .feature-character {
+        right: -250px;
+        left: auto;
+        width: 500px;
+      }
+      .feature-content {
+        margin-right: 80px;
+      }
+    }
+    .feature-resources {
+      background: linear-gradient(90deg, #e7f7ff 60%, #d0eaff 100%);
+      .feature-character {
+        left: -250px;
+        right: auto;
+        width: 600px;
+      }
+      .feature-content {
+        margin-left: 80px;
+      }
+    }
+    .feature-teachers {
+      background: linear-gradient(90deg, #f7f7ff 60%, #e0eaff 100%);
+      .feature-character {
+        right: -250px;
+        left: auto;
+        width: 500px;
+      }
+      .feature-content {
+        margin-right: 80px;
+      }
+    }
+  }
+}
+
+// Media queries
+@media (max-width: 1200px) {
+  .learning-path-section {
+    .students-image img {
+      max-width: 99vw;
+    }
+    .features {
+      max-width: 99vw;
+      .feature {
+        padding: 32px 12px 32px 12px;
+        .feature-content {
+          margin: 0 !important;
+          h2 {
+            font-size: 2rem;
+          }
+        }
+        .feature-character {
+          width: 160px !important;
+          left: -60px !important;
+          right: -60px !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .learning-path-section {
+    .students-image img {
+      max-width: 98vw;
+    }
+    .features {
+      gap: 32px;
+      .feature {
+        flex-direction: column !important;
+        align-items: flex-start;
+        min-height: 180px;
+        padding: 20px 8px 32px 8px;
+        .feature-content {
+          margin: 0 !important;
+          h2 {
+            font-size: 1.5rem;
+          }
+          p {
+            font-size: 0.98rem;
+          }
+        }
+        .feature-character {
+          position: static;
+          width: 120px !important;
+          margin: 0 auto 0 0;
+          display: block;
+          filter: none;
+          left: unset !important;
+          right: unset !important;
+        }
+      }
+    }
+  }
+}

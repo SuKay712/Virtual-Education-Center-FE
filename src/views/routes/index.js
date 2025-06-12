@@ -31,6 +31,7 @@ import StudentChat from "../pages/student/Chat";
 import TeacherChat from "../pages/teacher/Chat";
 import AdminProfile from "../pages/admin/AdminProfile";
 import TheoryViewer from "../pages/TheoryViewer";
+import AdminContacts from "../pages/admin/Contacts";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AppRoutes = () => {
@@ -120,6 +121,10 @@ const AppRoutes = () => {
         <Route
           path="/admin/bookings"
           element={<AdminLayout component={BookingManagement} />}
+        />
+        <Route
+          path="/admin/contacts"
+          element={<AdminLayout component={AdminContacts} />}
         />
         <Route
           path="/admin/chat"
