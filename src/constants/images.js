@@ -30,4 +30,9 @@ export const IMAGES = {
   roadmap_teenadults_image: require("../assets/images/roadmap_teenadults-Photoroom.png"),
   roadmap_mover_image: require("../assets/images/roadmap_movers-Photoroom.png"),
   roadmap_flyers_image: require("../assets/images/roadmap_flyers-Photoroom.png"),
+  kindergarten_image: require("../assets/images/kindergarten.jpg"),
+  starter_image: require("../assets/images/starter.jpg"),
+  mover_image: require("../assets/images/movers.jpg"),
+  adults_image: require("../assets/images/adults.jpg"),
+  flyers_image: require("../assets/images/flyers.jpg"),
 };

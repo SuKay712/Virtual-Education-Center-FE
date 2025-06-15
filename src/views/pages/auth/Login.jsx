@@ -99,14 +99,6 @@ const Login = () => {
                   Login
                 </Button>
               </Form>
-              <div className="text-center mt-3">
-                <p>
-                  Don't have an account?{" "}
-                  <a href="/register" className="text-primary">
-                    Register here
-                  </a>
-                </p>
-              </div>
             </Card.Body>
           </Card>
         </Col>

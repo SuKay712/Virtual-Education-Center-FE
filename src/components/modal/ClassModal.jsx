@@ -115,6 +115,19 @@ const ClassModal = ({ info, handleCloseModal, theme }) => {
             <FaBookOpen className="me-2" />
             {info.lecture.name}
           </div>
+          {info.meeting_url && (
+            <div>
+              <i className="fas fa-video me-2"></i>
+              <a
+                href={info.meeting_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary"
+              >
+                {info.meeting_url}
+              </a>
+            </div>
+          )}
         </div>
         <div className="modal-class-detail">
           <div className="d-flex justify-content-between align-items-center">

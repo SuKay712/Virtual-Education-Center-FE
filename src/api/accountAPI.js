@@ -13,5 +13,14 @@ const accountAPI = {
     const url = "/notifications";
     return axiosClient.application.get(url);
   },
+
+  getRoadmaps: () => {
+    const url = "/roadmap";
+    return axiosClient.application.get(url);
+  },
+  getRoadmapDetail: (roadmapId) => {
+    const url = `/roadmap/${roadmapId}`;
+    return axiosClient.application.get(url);
+  },
 };
 export default accountAPI;

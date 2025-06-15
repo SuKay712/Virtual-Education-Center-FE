@@ -67,7 +67,7 @@ const AuthButton = () => {
           style={{ borderLeft: "1px solid #ccc", height: "24px" }}
         ></div>
       </div>
-      Đăng nhập / Đăng kí
+      Đăng nhập
     </button>
   );
 };

@@ -1,56 +1,113 @@
 import { IMAGES } from "../../constants/images";
 import "./CourseDetailModal.scss";
-import {
-  format,
-  addDays,
-  startOfWeek,
-  endOfWeek,
-  parse,
-  isWithinInterval,
-} from "date-fns";
+import { useState } from "react";
+import ScheduleSelectionModal from "./ScheduleSelectionModal";
 
-const CourseDetailModal = ({ course, onClose }) => {
-  console.log(course);
+const COLORS = [
+  "#4caf50",
+  "#ff9800",
+  "#2196f3",
+  "#e91e63",
+  "#9c27b0",
+  "#00bcd4",
+  "#ff5722",
+  "#607d8b",
+];
+
+const CourseDetailModal = ({ course, onClose, onPurchase }) => {
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const isFree = !course.price || Number(course.price) === 0;
+
+  const handleShowScheduleModal = () => {
+    setShowScheduleModal(true);
+  };
+
+  const handleCloseScheduleModal = () => {
+    setShowScheduleModal(false);
+  };
+
   return (
-    <div className="card-modal">
-      <div className={`card-modal-content classes color-4caf50`}>
-        <div className="position-relative d-flex justify-content-between">
-          <h3 className="mb-4">Classes for {course.name}</h3>
-          <button className="card-close-btn" onClick={onClose}>
+    <>
+      <div className="card-modal modern-modal">
+        <div className="card-modal-content modern-modal-content">
+          <button
+            className="card-close-btn modern-close-btn round"
+            onClick={onClose}
+          >
             <i className="fa fa-times"></i>
           </button>
-        </div>
-        <ul className="lecture-list">
-          {course.classes.map((classData) => {
-            const time_start = parse(
-              classData.time_start,
-              "HH:mm dd/MM/yyyy",
-              new Date()
-            );
-            const isCompleted = time_start < new Date().getTime();
-            return (
-              <li key={classData.id} className="lecture-item d-flex">
-                <div className="lecture-info d-flex aligns-item-center">
-                  <img
-                    src={IMAGES.france_image}
-                    alt={classData.lecture.name}
-                    className="lecture-image"
-                  />
-                  <div className="d-flex align-items-center justify-content-between flex-grow-1 me-2">
-                    <h4 className="lecture-name mb-0">
-                      {classData.lecture.name}
-                    </h4>
-                    {isCompleted && (
-                      <i className="fa fa-check-circle text-success ms-2 fa-lg"></i>
-                    )}
+          <div className="modern-modal-header big">
+            <div className="modern-modal-course-img-wrap">
+              <img
+                src={course.image || IMAGES.france_image}
+                alt={course.name}
+                className="modern-modal-course-img big"
+              />
+            </div>
+            <div className="modern-modal-course-info">
+              <h2 className="modern-modal-course-title big">{course.name}</h2>
+              <div className="modern-modal-course-meta big">
+                <span className="modern-modal-course-classes big">
+                  {course.num_classes} buổi
+                </span>
+                {isFree ? (
+                  <span className="modern-modal-badge-free big">Miễn phí</span>
+                ) : (
+                  <span className="modern-modal-course-price big">
+                    {Number(course.price).toLocaleString("vi-VN")} ₫
+                  </span>
+                )}
+              </div>
+              <p className="modern-modal-course-desc big">
+                {course.description}
+              </p>
+            </div>
+          </div>
+          <h3 className="modern-modal-lecture-title">Danh sách bài học</h3>
+          <ul className="modern-modal-lecture-list modern-lecture-list-cards">
+            {course.lectures.map((lecture, idx) => (
+              <li
+                key={lecture.id}
+                className="modern-modal-lecture-item card-style"
+                style={{ "--color": COLORS[idx % COLORS.length] }}
+              >
+                <div
+                  className="modern-modal-lecture-num"
+                  style={{ background: COLORS[idx % COLORS.length] }}
+                >
+                  {idx + 1}
+                </div>
+                <div className="modern-modal-lecture-info">
+                  <div className="modern-modal-lecture-name bold">
+                    {lecture.name}
                   </div>
+                  {lecture.description && (
+                    <div className="modern-modal-lecture-desc">
+                      {lecture.description}
+                    </div>
+                  )}
                 </div>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ul>
+          <div className="modern-modal-actions">
+            <button
+              className="modern-course-purchase-btn"
+              onClick={handleShowScheduleModal}
+            >
+              MUA KHÓA HỌC
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+
+      {showScheduleModal && (
+        <ScheduleSelectionModal
+          courseId={course.id}
+          onClose={handleCloseScheduleModal}
+        />
+      )}
+    </>
   );
 };
 

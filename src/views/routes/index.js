@@ -32,6 +32,7 @@ import TeacherChat from "../pages/teacher/Chat";
 import AdminProfile from "../pages/admin/AdminProfile";
 import TheoryViewer from "../pages/TheoryViewer";
 import AdminContacts from "../pages/admin/Contacts";
+import RoadmapDetail from "../pages/student/RoadmapDetail";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
 
 const AppRoutes = () => {
@@ -47,7 +48,10 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      {/* // public route  */}
+      {/* Default route */}
+      <Route path="/" element={<Navigate to="/home" replace />} />
+
+      {/* Public routes */}
       <Route element={<PublicRoute />}>
         <Route path="/home" element={<MainLayout component={Homepage} />} />
         <Route path="/login" element={<MainLayout component={Login} />} />
@@ -63,6 +67,10 @@ const AppRoutes = () => {
         <Route
           path="/student/course"
           element={<StudentLayout component={Course} />}
+        />
+        <Route
+          path="/student/course/:roadmapId"
+          element={<StudentLayout component={RoadmapDetail} />}
         />
         <Route
           path="/student/schedule"

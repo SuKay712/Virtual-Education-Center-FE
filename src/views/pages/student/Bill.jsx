@@ -88,7 +88,7 @@ function Bill() {
                     <tr key={bill.id}>
                       <td>{indexOfFirstBill + idx + 1}</td>
                       <td>{bill.course?.name}</td>
-                      <td>{bill.price} $</td>
+                      <td>{bill.price}đ</td>
                       <td>{renderStatus(bill.status)}</td>
                       <td>{formatDate(bill.createdAt)}</td>
                     </tr>

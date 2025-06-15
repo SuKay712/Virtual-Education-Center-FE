@@ -27,7 +27,7 @@ const adminAPI = {
   },
 
   getCourses: () => {
-    const url = "/course/admin";
+    const url = "/courses/admin";
     return axiosClient.application.get(url);
   },
 

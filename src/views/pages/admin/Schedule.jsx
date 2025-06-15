@@ -14,6 +14,7 @@ import {
   Row,
   Col,
   Divider,
+  Input,
 } from "antd";
 import {
   CalendarOutlined,
@@ -210,6 +211,7 @@ const AdminSchedule = () => {
         time_start: `${startDateTime.format("HH:mm DD/MM/YYYY")}`,
         time_end: `${endDateTime.format("HH:mm DD/MM/YYYY")}`,
         teacherIds: teacherIds,
+        meeting_url: values.meeting_url,
       };
 
       try {
@@ -866,6 +868,35 @@ const AdminSchedule = () => {
                           </>
                         )}
                       </div>
+                    </div>
+
+                    <Divider style={{ margin: "16px 0" }} />
+
+                    <div>
+                      <Text
+                        strong
+                        style={{
+                          fontSize: "20px",
+                          display: "block",
+                          marginBottom: "24px",
+                          color: "#1a1a1a",
+                        }}
+                      >
+                        <BookOutlined
+                          style={{ marginRight: "12px", color: "#1890ff" }}
+                        />
+                        Thông tin Google Meet
+                      </Text>
+                      <Form.Item
+                        name="meeting_url"
+                        label="Link Google Meet"
+                        initialValue={selectedClass.meeting_url}
+                        rules={[
+                          { type: "url", message: "Vui lòng nhập URL hợp lệ!" },
+                        ]}
+                      >
+                        <Input placeholder="Nhập link Google Meet" />
+                      </Form.Item>
                     </div>
                   </Space>
                 </Card>

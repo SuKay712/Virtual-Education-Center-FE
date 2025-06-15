@@ -158,3 +158,671 @@
   flex: 1;
   min-width: 0; // Prevent flex item from overflowing
 }
+
+.modern-roadmap-page {
+  width: 100%;
+  padding: 32px 0 0 0;
+}
+
+.modern-roadmap-header {
+  font-size: 2.2rem;
+  margin-bottom: 32px;
+  text-align: left;
+  margin-left: 32px;
+  margin-bottom: 4px;
+  color: #8e650c;
+  font-weight: 900;
+}
+
+.modern-roadmap-slider {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  overflow-x: auto;
+  padding: 16px 32px 32px 32px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+.slider-card {
+  flex: 0 0 350px;
+  max-width: 350px;
+  min-width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+  position: relative;
+  padding-bottom: 18px;
+}
+.slider-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(76, 175, 80, 0.18);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.modern-roadmap-img-wrap {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+.modern-roadmap-img {
+  max-width: 90%;
+  max-height: 160px;
+  object-fit: contain;
+}
+
+.modern-roadmap-content {
+  padding: 18px 18px 0 18px;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.modern-roadmap-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #333;
+}
+.modern-roadmap-desc {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 18px;
+  min-height: 48px;
+}
+.modern-roadmap-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s;
+}
+.modern-roadmap-btn:hover {
+  background: #388e3c;
+}
+
+// Hide scroll bar but allow scroll
+.modern-roadmap-slider::-webkit-scrollbar {
+  height: 8px;
+  background: #eee;
+  border-radius: 8px;
+}
+.modern-roadmap-slider::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 8px;
+}
+
+.modern-back-btn {
+  background: #fff;
+  color: #4caf50;
+  border: 2px solid #4caf50;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+  margin-left: 8px;
+  margin-top: 16px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.modern-back-btn:hover {
+  background: #4caf50;
+  color: #fff;
+}
+
+.modern-roadmap-detail-header {
+  margin-bottom: 32px;
+  padding-left: 8px;
+}
+.modern-roadmap-detail-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #222;
+}
+.modern-roadmap-detail-desc {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 0;
+}
+
+.modern-roadmap-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.modern-roadmap-block {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
+  padding: 32px 32px 24px 32px;
+  margin-bottom: 0;
+  border-left: 6px solid #4caf50;
+}
+.modern-roadmap-block-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+.modern-roadmap-block-desc {
+  font-size: 1.05rem;
+  color: #666;
+  margin-bottom: 18px;
+}
+.modern-roadmap-block-courses {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modern-course-card.detail.improved {
+  display: flex;
+  align-items: flex-start;
+  background: #f8f8f8;
+  border-radius: 14px;
+  box-shadow: 0 1px 8px 0 rgba(76, 175, 80, 0.07);
+  padding: 18px 24px;
+  gap: 24px;
+  border: 1.5px solid #e0e0e0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.modern-course-card.detail.improved .modern-course-img {
+  width: 120px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #eee;
+}
+.modern-course-card.detail.improved .modern-course-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.modern-course-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 6px;
+  gap: 16px;
+}
+.modern-course-header-row h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  flex: 1;
+}
+.modern-course-price.big {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #e53935;
+  margin-left: 16px;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+.modern-course-price .vnd {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #888;
+  margin-left: 2px;
+}
+.modern-course-card.detail.improved .modern-course-desc {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+.modern-course-card.detail.improved .modern-course-meta {
+  display: flex;
+  gap: 18px;
+  font-size: 1rem;
+  color: #4caf50;
+  font-weight: 600;
+  align-items: center;
+}
+.modern-course-detail-btn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 12px;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.08);
+}
+.modern-course-detail-btn:hover {
+  background: #1565c0;
+  box-shadow: 0 4px 16px 0 rgba(33, 150, 243, 0.18);
+}
+
+.modern-course-card.detail.f8-style {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(33, 150, 243, 0.07);
+  border: 1.5px solid #e0e0e0;
+  padding: 24px 32px;
+  margin-bottom: 0;
+  margin-top: 0;
+  gap: 32px;
+  min-height: 160px;
+  transition: box-shadow 0.2s;
+}
+.modern-course-card.detail.f8-style:hover {
+  box-shadow: 0 8px 32px 0 rgba(33, 150, 243, 0.13);
+}
+.modern-course-img-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  max-width: 220px;
+}
+.modern-course-img-bg {
+  background: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+  border-radius: 14px;
+  padding: 0;
+  width: 160px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px 0 rgba(248, 87, 166, 0.08);
+}
+.modern-course-img {
+  width: 120px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+}
+.modern-course-info-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+.modern-course-info-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.modern-course-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0;
+}
+.modern-course-badge-free {
+  background: none;
+  color: #ff6600;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-left: 8px;
+}
+.modern-course-desc {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+.modern-course-info-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: auto;
+  gap: 16px;
+}
+.modern-course-meta {
+  display: flex;
+  gap: 18px;
+  font-size: 1rem;
+  color: #4caf50;
+  font-weight: 600;
+  align-items: center;
+}
+.modern-course-price {
+  color: #e53935;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-left: 8px;
+}
+.modern-course-detail-btn.big {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.08);
+  margin-left: 12px;
+  margin-top: 0;
+}
+.modern-course-detail-btn.big:hover {
+  background: #1565c0;
+  box-shadow: 0 4px 16px 0 rgba(33, 150, 243, 0.18);
+}
+
+// Responsive
+@media (max-width: 700px) {
+  .modern-course-card.detail.f8-style {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px 8px;
+    gap: 16px;
+  }
+  .modern-course-img-col {
+    min-width: 0;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .modern-course-img-bg {
+    width: 100%;
+    min-width: 120px;
+    max-width: 100%;
+    height: 90px;
+  }
+  .modern-course-img {
+    width: 90px;
+    height: 70px;
+  }
+  .modern-course-detail-btn.big {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 12px;
+  }
+  .modern-course-info-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+
+.modern-roadmap-page.grid-layout {
+  width: 100%;
+  padding: 32px 0 0 0;
+}
+
+.modern-roadmap-main-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 24px;
+  position: relative;
+}
+
+.modern-roadmap-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 340px);
+  gap: 36px 32px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.modern-roadmap-card.grid-card {
+  background: #fafbfc;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(33, 150, 243, 0.07);
+  border: 2.5px solid #f0f0f0;
+  padding-bottom: 18px;
+  transition:
+    box-shadow 0.2s,
+    border 0.2s,
+    transform 0.18s;
+  cursor: pointer;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modern-roadmap-card.grid-card.active {
+  border: 2.5px solid #4caf50;
+  box-shadow: 0 8px 32px 0 rgba(76, 175, 80, 0.13);
+  transform: scale(1.03);
+}
+.modern-roadmap-card.grid-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(33, 150, 243, 0.13);
+  border: 2.5px solid #2196f3;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.modern-roadmap-path {
+  min-width: 340px;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(33, 150, 243, 0.07);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 0;
+}
+.modern-roadmap-path-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #1565c0;
+  margin-bottom: 18px;
+  margin-top: 0;
+}
+.modern-roadmap-path-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.modern-roadmap-path-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: #f8fafc;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.04);
+  border: 1.5px solid #e0e0e0;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition:
+    box-shadow 0.18s,
+    border 0.18s,
+    background 0.18s;
+  position: relative;
+}
+.modern-roadmap-path-step:hover {
+  background: #f0f7ff;
+  border: 1.5px solid #2196f3;
+  box-shadow: 0 4px 18px 0 rgba(33, 150, 243, 0.1);
+}
+.modern-roadmap-path-stepnum {
+  min-width: 38px;
+  min-height: 38px;
+  max-width: 38px;
+  max-height: 38px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.08);
+}
+.modern-roadmap-path-stepinfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.modern-roadmap-path-stepname {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 2px;
+  margin-top: 0;
+  word-break: break-word;
+}
+.modern-roadmap-path-stepdesc {
+  font-size: 0.98rem;
+  color: #555;
+  margin-top: 2px;
+  margin-bottom: 0;
+  word-break: break-word;
+  line-height: 1.5;
+}
+.modern-roadmap-path-empty {
+  color: #888;
+  font-size: 1.08rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+@media (max-width: 1100px) {
+  .modern-roadmap-main-grid {
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+  .modern-roadmap-path {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    margin-top: 0;
+  }
+}
+@media (max-width: 900px) {
+  .modern-roadmap-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+@media (max-width: 600px) {
+  .modern-roadmap-page.grid-layout {
+    padding: 12px 0 0 0;
+  }
+  .modern-roadmap-main-grid {
+    gap: 18px;
+  }
+  .modern-roadmap-path {
+    padding: 16px 6px 10px 6px;
+  }
+}
+
+.modern-roadmap-stepper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+}
+.modern-roadmap-stepper-step {
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-height: 56px;
+  cursor: pointer;
+  transition: background 0.18s;
+  z-index: 1;
+  margin-bottom: 0;
+}
+.modern-roadmap-stepper-step:hover .modern-roadmap-stepper-circle {
+  box-shadow: 0 2px 12px 0 rgba(33, 150, 243, 0.13);
+  transform: scale(1.08);
+}
+.modern-roadmap-stepper-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.08);
+  margin-right: 18px;
+  transition:
+    box-shadow 0.18s,
+    transform 0.18s;
+  flex-shrink: 0;
+}
+.modern-roadmap-stepper-line {
+  position: absolute;
+  left: 18px;
+  top: 38px;
+  width: 2.5px;
+  height: 40px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+.modern-roadmap-stepper-label {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #222;
+  background: none;
+  padding: 0 0 0 0;
+  margin: 0;
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .modern-roadmap-stepper-label {
+    font-size: 1rem;
+  }
+  .modern-roadmap-stepper-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  .modern-roadmap-stepper-line {
+    left: 15px;
+    height: 32px;
+  }
+}

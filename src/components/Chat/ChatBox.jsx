@@ -91,7 +91,11 @@ const ChatBox = ({ chatbox }) => {
           let lastDate = null;
           return messages.map((message) => {
             const isSent = String(message.sender?.id) === String(account.id);
-            const msgDate = dayjs(message.created_at).format("DD/MM/YYYY");
+            const dateObj = dayjs(message.created_at, "HH:mm DD/MM/YYYY", true);
+            const validDate = dateObj.isValid()
+              ? dateObj
+              : dayjs(message.created_at);
+            const msgDate = validDate.format("DD/MM/YYYY");
             const showDateDivider = msgDate !== lastDate;
             lastDate = msgDate;
             return (
@@ -119,7 +123,7 @@ const ChatBox = ({ chatbox }) => {
                     <div className="message-bubble-group">
                       {isSent && (
                         <span className="message-time">
-                          {dayjs(message.created_at).format("HH:mm")}
+                          {validDate.format("HH:mm")}
                         </span>
                       )}
                       <div
@@ -129,7 +133,7 @@ const ChatBox = ({ chatbox }) => {
                       </div>
                       {!isSent && (
                         <span className="message-time">
-                          {dayjs(message.created_at).format("HH:mm")}
+                          {validDate.format("HH:mm")}
                         </span>
                       )}
                     </div>

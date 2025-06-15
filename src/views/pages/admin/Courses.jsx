@@ -68,7 +68,7 @@ const AdminCourses = () => {
       key: "price",
       width: "10%",
       align: "center",
-      render: (price) => `${price}$`,
+      render: (price) => `${price}VND`,
     },
     {
       title: "Số lớp học",

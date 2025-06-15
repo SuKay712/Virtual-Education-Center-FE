@@ -252,7 +252,17 @@ function StudentLayout(props) {
                               className="fa fa-clock-o"
                               style={{ fontSize: 13, marginRight: 3 }}
                             ></i>
-                            {dayjs(n.created_at).format("DD/MM/YYYY, HH:mm")}
+                            {(() => {
+                              const dateObj = dayjs(
+                                n.created_at,
+                                "HH:mm DD/MM/YYYY",
+                                true
+                              );
+                              const validDate = dateObj.isValid()
+                                ? dateObj
+                                : dayjs(n.created_at);
+                              return validDate.format("DD/MM/YYYY, HH:mm");
+                            })()}
                           </div>
                         </div>
                       </div>
