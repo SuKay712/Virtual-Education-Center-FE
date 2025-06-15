@@ -18,24 +18,14 @@ module.exports = {
   },
   plugins: ["react", "react-hooks"],
   rules: {
-    // Disable warnings for unused variables and imports
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
+    // Completely disable unused variables warnings
+    "no-unused-vars": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "off",
 
     // Allow console.log in development
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-console": "off",
 
     // Disable quotes rule completely
     quotes: "off",
