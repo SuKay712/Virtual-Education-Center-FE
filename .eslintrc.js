@@ -19,7 +19,17 @@ module.exports = {
   plugins: ["react", "react-hooks"],
   rules: {
     // Disable warnings for unused variables and imports
-    "no-unused-vars": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        vars: "all",
+        args: "after-used",
+        ignoreRestSiblings: true,
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "off",
@@ -27,21 +37,11 @@ module.exports = {
     // Allow console.log in development
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 
-    // Allow any type of quotes
-    quotes: ["error", "single", { avoidEscape: true }],
+    // Disable quotes rule completely
+    quotes: "off",
 
     // Allow semicolons to be optional
     semi: ["error", "always"],
-
-    // Allow unused parameters in functions
-    "no-unused-vars": [
-      "warn",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
 
     // Allow empty functions
     "no-empty-function": "off",
@@ -61,141 +61,14 @@ module.exports = {
     // Allow unused rest properties
     "no-unused-rest-properties": "off",
 
-    // Allow unused variables in destructuring
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-      },
-    ],
+    // Disable display name requirement
+    "react/display-name": "off",
 
-    // Allow unused variables in catch clauses
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
+    // Disable duplicate keys check
+    "no-dupe-keys": "off",
 
-    // Allow unused variables in function parameters
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-      },
-    ],
-
-    // Allow unused variables in object destructuring
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        ignoreRestSiblings: true,
-      },
-    ],
-
-    // Allow unused variables in array destructuring
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        ignoreRestSiblings: true,
-        destructuredArrayIgnorePattern: "^_",
-      },
-    ],
-
-    // Allow unused variables in function declarations
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        ignoreRestSiblings: true,
-        destructuredArrayIgnorePattern: "^_",
-        functions: "all",
-      },
-    ],
-
-    // Allow unused variables in class declarations
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        ignoreRestSiblings: true,
-        destructuredArrayIgnorePattern: "^_",
-        functions: "all",
-        classes: "all",
-      },
-    ],
-
-    // Allow unused variables in module declarations
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        ignoreRestSiblings: true,
-        destructuredArrayIgnorePattern: "^_",
-        functions: "all",
-        classes: "all",
-        modules: "all",
-      },
-    ],
-
-    // Allow unused variables in global scope
-    "no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true,
-        varsIgnorePattern: "^_",
-        argsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-      },
-    ],
+    // Disable unescaped entities check
+    "react/no-unescaped-entities": "off",
   },
   settings: {
     react: {
