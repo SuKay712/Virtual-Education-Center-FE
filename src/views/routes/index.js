@@ -30,7 +30,6 @@ import AdminChat from "../pages/admin/Chat";
 import StudentChat from "../pages/student/Chat";
 import TeacherChat from "../pages/teacher/Chat";
 import AdminProfile from "../pages/admin/AdminProfile";
-import TheoryViewer from "../pages/TheoryViewer";
 import AdminContacts from "../pages/admin/Contacts";
 import RoadmapDetail from "../pages/student/RoadmapDetail";
 // const UserHomePage = LoadableComponent(() => import("../pages/homepage/index"));
@@ -56,7 +55,6 @@ const AppRoutes = () => {
         <Route path="/home" element={<MainLayout component={Homepage} />} />
         <Route path="/login" element={<MainLayout component={Login} />} />
         <Route path="/register" element={<MainLayout component={Register} />} />
-        <Route path="/theory/:theoryId/view" element={<TheoryViewer />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["Student"]} />}>
